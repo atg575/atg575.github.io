@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alex Vazquez | Engineering Portfolio</title>
-    <link rel="icon" href="logo2 (2).ico" type="image/x-icon">
+    <link rel="icon" href="logo2.png" type="image/x-icon">
     <style>
         /* Base Styles and Reset */
         * {
@@ -129,11 +129,22 @@
             color: #074d1d;
             text-decoration: none;
         }
+        /* --- New Logo Styles --- */
+        #spin-logo {
+            height: 40px; /* Adjust this to make your logo bigger or smaller */
+            position: absolute;
+            left: 2rem; /* Keeps it pinned to the left side */
+            top: 50%;
+            /* Centers it vertically. The JavaScript will also update this! */
+            transform: translateY(-50%) rotate(0deg); 
+            will-change: transform; /* Helps the browser animate it smoothly */
+        }
     </style>
 </head>
 <body>
 
     <nav>
+        <img src="logo2.png" id="spin-logo" alt="Site Logo">
         <ul>
             <li><a href="#about">About</a></li>
             <li><a href="#skills">Skills</a></li>
@@ -144,7 +155,7 @@
 
     <header>
         <h1>Alex Vazquez</h1>
-        <p>Design | Analysis | Realization</p>
+        <p>Design | Analyse | Realize</p>
     </header>
 
     <div class="container">
@@ -194,6 +205,24 @@
     <footer>
         <p>&copy; 2026 Alex Vazquez. All rights reserved.</p>
     </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const logo = document.getElementById("spin-logo");
+            
+            window.addEventListener("scroll", function() {
+                // Get the current scroll distance in pixels
+                let scrollPosition = window.scrollY;
+                
+                // Calculate rotation. 
+                // Multiply by 0.5 to control the speed (higher = faster spin)
+                let rotationAngle = scrollPosition * 0.5; 
+                
+                // Apply the rotation while keeping the -50% vertical centering from the CSS
+                logo.style.transform = `translateY(-50%) rotate(${rotationAngle}deg)`;
+            });
+        });
+    </script>
 
 </body>
 </html>
