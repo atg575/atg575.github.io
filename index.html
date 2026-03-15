@@ -12,48 +12,96 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            scroll-behavior: smooth;
+            scroll-padding-top: 80px;
         }
 
         body {
-            background-color: #f4f7f6;
-            color: #333;
+            background-color: #F7F1EB;
+            color: #2B3621;
             line-height: 1.6;
         }
 
         /* Navigation */
         nav {
             background-color: #F7F1EB;
-            color: #fff;
+            color: #2B3621;
             padding: 1rem 0;
             position: sticky;
             top: 0;
             z-index: 100;
         }
 
-        nav ul {
-            list-style: none;
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-        }
-
         nav a {
-            color: #fff;
+            color: #2B3621;
             text-decoration: none;
             font-weight: bold;
             transition: color 0.3s ease;
         }
 
         nav a:hover {
-            color: #F7F1EB;
+            color: #1d2416;
         }
 
-        /* Header Section */
+        /* --- Updated Nav Layout --- */
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: left;
+            gap: 2rem;
+            margin-left: 18rem; /* Pushed further right to make room for the new name */
+        }
+
+        /* --- Nav Profile (Hidden by Default) --- */
+        .nav-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            position: absolute;
+            left: 6.5rem; /* Positions it right next to the spinning logo */
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0; /* Hidden initially */
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .nav-pic {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            object-fit: cover; /* Keeps the image from stretching */
+        }
+
+        .nav-name {
+            font-weight: bold;
+            color: #2B3621;
+        }
+
+        /* When the 'scrolled' class is added via JS, show the profile */
+        nav.scrolled .nav-profile {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* --- Updated Header Layout --- */
         header {
-            background: linear-gradient(135deg, #2c5030, #F7F1EB);
+            background-color: #2B3621;
             color: white;
-            text-align: center;
             padding: 5rem 2rem;
+        }
+
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 3rem; 
+            max-width: 1000px; /* Aligns perfectly with your main content container */
+            margin: 0 auto;
+        }
+
+        .header-text {
+            flex: 1; 
         }
 
         header h1 {
@@ -65,6 +113,26 @@
             font-size: 1.2rem;
             font-weight: 300;
             opacity: 0.9;
+        }
+
+        /* The main header image */
+        .main-profile-pic {
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0 8px 15px rgba(0,0,0,0.3); /* Adds depth */
+        }
+
+        /* --- Typewriter Cursor --- */
+        #typewriter-name::after {
+            content: '_';
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+            from, to { opacity: 1; }
+            50% { opacity: 0; }
         }
 
         /* Container for Main Content */
@@ -84,44 +152,83 @@
         }
 
         section h2 {
-            color: #2c3e50;
+            color: #2B3621;
             border-bottom: 2px solid #F7F1EB;
             padding-bottom: 0.5rem;
             margin-bottom: 1.5rem;
         }
 
-        /* Skills Grid */
-        .skills-grid {
+        /* --- Custom Grid Layout --- */
+        grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 1rem;
+            align-items: start; /* Keeps closed cards their normal size */
         }
 
-        .skill-card {
-            background: #ecf0f1;
+        /* --- Custom Global Card Styles --- */
+        card {
+            display: block; /* Forces custom tag to behave like a standard block div */
+            background: #F7F1EB;
             padding: 1rem;
             border-radius: 5px;
+            color: #32502c;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* --- Skill Card Specifics --- */
+        #skills card {
             text-align: center;
             font-weight: bold;
-            color: #2c3e50;
+            cursor: pointer; /* Indicates they are clickable */
         }
 
-        /* Project List */
-        .project {
+        #skills card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+        }
+
+        .skill-title {
+            display: block;
+        }
+
+        .skill-details {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            font-size: 0.9rem;
+            font-weight: normal;
+            text-align: left;
+            transition: max-height 0.4s ease-in-out, opacity 0.3s ease-in-out, margin-top 0.4s ease-in-out; 
+            color: #555;
+        }
+
+        #skills card.active .skill-details {
+            max-height: 150px; 
+            opacity: 1;
+            margin-top: 1rem;
+            border-top: 1px solid #ccc;
+            padding-top: 0.5rem;
+        }
+
+        /* --- Project Card Specifics --- */
+        #projects card {
+            background: white; 
             margin-bottom: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
         }
 
-        .project h3 {
+        #projects card h3 {
             color: #074d1d;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0; 
         }
 
         /* Footer */
         footer {
             text-align: center;
             padding: 2rem;
-            background-color: #2c5030;
-            color: white;
+            background-color: #F7F1EB;
+            color: #2B3621;
             margin-top: 2rem;
         }
 
@@ -129,33 +236,152 @@
             color: #F7F1EB;
             text-decoration: none;
         }
+
         /* --- New Logo Styles --- */
         #spin-logo {
-            height: 40px; /* Adjust this to make your logo bigger or smaller */
+            height: 40px; 
             position: absolute;
-            left: 2rem; /* Keeps it pinned to the left side */
+            left: 2rem; 
             top: 50%;
-            /* Centers it vertically. The JavaScript will also update this! */
             transform: translateY(-50%) rotate(0deg); 
-            will-change: transform; /* Helps the browser animate it smoothly */
+            will-change: transform; 
         }
+
+        /* --- Expandable Project Card Content --- */
+        .more-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-in-out, margin-top 0.4s ease-in-out; 
+            color: #555;
+        }
+
+        .more-content.expanded {
+            max-height: 150px; 
+            margin-top: 1rem;
+        }
+
+        /* --- Animated Expand Button --- */
+        .expand-btn {
+            background-color: #074d1d;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            position: relative;
+            transition: background-color 0.3s ease;
+            flex-shrink: 0; 
+        }
+
+        .expand-btn:hover {
+            background-color: #2c5030;
+        }
+
+        .chevron-line {
+            position: absolute;
+            top: 50%;
+            width: 12px;
+            height: 2px;
+            background-color: white;
+            transition: transform 0.3s ease;
+            margin-top: -1px; 
+        }
+
+        .chevron-line.left {
+            right: 50%;
+            transform-origin: right center;
+            transform: rotate(45deg);
+        }
+
+        .chevron-line.right {
+            left: 50%;
+            transform-origin: left center;
+            transform: rotate(-45deg);
+        }
+
+        .expand-btn.open .chevron-line.left {
+            transform: rotate(0deg);
+        }
+
+        .expand-btn.open .chevron-line.right {
+            transform: rotate(0deg);
+        }
+
+        /* --- Flexbox Header for Projects --- */
+        .project-header {
+            display: flex;
+            justify-content: space-between; 
+            align-items: center; 
+            margin-bottom: 0.5rem;
+        }
+
+        /* --- Mobile Responsiveness --- */
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                gap: 0.5rem;
+                padding: 1rem 0;
+                margin-left: 0; /* Centers nav links on mobile */
+                align-items: center;
+            }
+
+            header h1 {
+                font-size: 2.2rem;
+            }
+            
+            header p {
+                font-size: 1rem;
+            }
+
+            .header-container {
+                flex-direction: column-reverse; /* Puts your face on top, text below on mobile */
+                text-align: center;
+            }
+            
+            .nav-profile {
+                display: none; /* Hides the small nav name on phones to save space */
+            }
+
+            .project-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .expand-btn {
+                align-self: flex-end;
+            }
+        }
+
     </style>
 </head>
 <body>
 
     <nav>
         <img src="logo2.png" id="spin-logo" alt="Site Logo">
+        
+        <div class="nav-profile">
+            <img src="portrait.jpg" alt="Alex Vazquez" class="nav-pic">
+            <span class="nav-name">Alex Vazquez</span>
+        </div>
+
         <ul>
             <li><a href="#about">About</a></li>
             <li><a href="#skills">Skills</a></li>
+            <li><a href="#software">Software</a></li>
             <li><a href="#projects">Projects</a></li>
             <li><a href="#contact">Contact</a></li>
         </ul>
     </nav>
 
-    <header>
-        <h1>Alex Vazquez</h1>
-        <p>Design | Analyze | Execute</p>
+    <header id="main-header">
+        <div class="header-container">
+            <div class="header-text">
+                <h1 id="typewriter-name"></h1>
+                <p>Design | Analysis | Realization</p>
+            </div>
+            <img src="portrait.jpg" alt="Alex Vazquez" class="main-profile-pic">
+        </div>
     </header>
 
     <div class="container">
@@ -166,33 +392,117 @@
 
         <section id="skills">
             <h2>Technical Skills</h2>
-            <div class="skills-grid">
-                <div class="skill-card">Data Analysis</div>
-                <div class="skill-card">CAD Design</div>
-                <div class="skill-card">Process Development</div>
-                <div class="skill-card">Project Management</div>
-                <div class="skill-card">Test Development</div>
-                <div class="skill-card">Design for Manufacturing</div>
-                <div class="skill-card">Process Failure Mode & Effects Analysis (PFMEA)</div>
-                <div class="skill-card">Finite Element Analysis (FEA)</div>
-                <div class="skill-card">Design for Manufacturing (DFM)</div>
-            </div>
+            <grid>
+                <card>
+                    <span class="skill-title">Data Analysis</span>
+                    <div class="skill-details">
+                        <p>Utilizing Python programming to parse, visualize, and extract insights from complex test data.</p>
+                    </div>
+                </card>
+                <card>
+                    <span class="skill-title">CAD Design</span>
+                    <div class="skill-details">
+                        <p>Designing geometries optimized for structural integrity and real-world assembly.</p>
+                    </div>
+                </card>
+                <card>
+                    <span class="skill-title">Process Development</span>
+                    <div class="skill-details">
+                        <p>Streamlining manufacturing workflows and implementing continuous improvement methodologies.</p>
+                    </div>
+                </card>
+                <card>
+                    <span class="skill-title">Project Management</span>
+                    <div class="skill-details">
+                        <p>Coordinating cross-functional efforts to deliver engineering solutions on tight timelines.</p>
+                    </div>
+                </card>
+                <card>
+                    <span class="skill-title">Test Development</span>
+                    <div class="skill-details">
+                        <p>Designing physical test rigs and defining protocols to validate system reliability.</p>
+                    </div>
+                </card>
+                <card>
+                    <span class="skill-title">DFM</span>
+                    <div class="skill-details">
+                        <p>Optimizing materials and geometries to ensure scalable and cost-effective production.</p>
+                    </div>
+                </card>
+                <card>
+                    <span class="skill-title">PFMEA</span>
+                    <div class="skill-details">
+                        <p>Identifying and mitigating potential process failures before they impact production.</p>
+                    </div>
+                </card>
+                <card>
+                    <span class="skill-title">FEA</span>
+                    <div class="skill-details">
+                        <p>Validating solid mechanics and heat transfer behaviors under rigorous load conditions.</p>
+                    </div>
+                </card>
+            </grid>
+        </section>
+
+        <section id="software">
+            <h2>Software</h2>
+            <grid>
+                <card>CAD</card>
+                <card>Coding</card>
+                <card>Data Analysis</card>
+            </grid>
         </section>
 
         <section id="projects">
             <h2>Rivian Projects</h2>
-            <div class="project">
-                <h3>Battery Interconnect Fatigue Testing</h3>
-                <p>Spearheaded the fatigue testing regiment used to validate battery module currenct collector to cell interconnect weld reliability.</p>
-            </div>
-            <div class="project">
-                <h3>FEA & Structural Mechanics Analysis</h3>
+            
+            <card class="project">
+                <div class="project-header">
+                    <h3>Battery Interconnect Fatigue Testing</h3>
+                    <button class="expand-btn" aria-label="Toggle details">
+                        <span class="chevron-line left"></span>
+                        <span class="chevron-line right"></span>
+                    </button>
+                </div>
+                
+                <p>Spearheaded the fatigue testing regiment used to validate battery module current collector to cell interconnect weld reliability.</p>
+                
+                <div class="more-content">
+                    <p>Designed coupons and test setup, ran both quasi-static and fatigue tests, and compared empirical results against CAE modeled requirements to ensure long-term durability.</p>
+                    <p>Collaborated with product engineers to integrate test findings into design improvements.</p>
+                    <p>Broke down the improvements and significant findings to leadership and documented the results and methodology for future reference.</p>
+                </div>
+            </card>
+
+            <card class="project">
+                <div class="project-header">
+                    <h3>FEA & Structural Mechanics Analysis</h3>
+                    <button class="expand-btn" aria-label="Toggle details">
+                        <span class="chevron-line left"></span>
+                        <span class="chevron-line right"></span>
+                    </button>
+                </div>
                 <p>Modeled and analyzed advanced beam theory problems and fluid mechanics scenarios using Finite Element Analysis methodologies to validate structural integrity under varying load conditions.</p>
-            </div>
-            <div class="project">
-                <h3>Autonomous Systems with ROS2</h3>
+                
+                <div class="more-content">
+                    <p>Utilized solid mechanics principles to isolate stress concentrations and iteratively optimize the truss designs.</p>
+                </div>
+            </card>
+
+            <card class="project">
+                <div class="project-header">
+                    <h3>Autonomous Systems with ROS2</h3>
+                    <button class="expand-btn" aria-label="Toggle details">
+                        <span class="chevron-line left"></span>
+                        <span class="chevron-line right"></span>
+                    </button>
+                </div>
                 <p>Developed and configured nodes within the Robot Operating System 2 (ROS2) framework to handle sensor data parsing and movement logic for simulated robotics applications.</p>
-            </div>
+                
+                <div class="more-content">
+                    <p>Created Python scripts to interface with the simulation environment, demonstrating robust movement and object detection capabilities.</p>
+                </div>
+            </card>
         </section>
 
         <section id="contact">
@@ -210,19 +520,70 @@
     </footer>
 
     <script>
+        // Rotating Logo
+        // Rotating Logo and Sticky Nav Profile
         document.addEventListener("DOMContentLoaded", function() {
             const logo = document.getElementById("spin-logo");
+            const nav = document.querySelector("nav");
+            const header = document.getElementById("main-header");
             
             window.addEventListener("scroll", function() {
-                // Get the current scroll distance in pixels
                 let scrollPosition = window.scrollY;
                 
-                // Calculate rotation. 
-                // Multiply by 0.5 to control the speed (higher = faster spin)
+                // 1. Handle the logo rotation
                 let rotationAngle = scrollPosition * 0.5; 
-                
-                // Apply the rotation while keeping the -50% vertical centering from the CSS
                 logo.style.transform = `translateY(-50%) rotate(${rotationAngle}deg)`;
+
+                // 2. Handle the nav profile fade-in
+                // If we scroll past the height of the header, add the 'scrolled' class
+                if (scrollPosition > header.offsetHeight - 50) {
+                    nav.classList.add("scrolled");
+                } else {
+                    nav.classList.remove("scrolled");
+                }
+            });
+        });
+
+        // Typewriter Effect
+        const nameText = "Alex Vazquez";
+        const typingSpeed = 180; 
+        let i = 0;
+
+        function typeWriter() {
+            if (i < nameText.length) {
+                document.getElementById("typewriter-name").innerHTML += nameText.charAt(i);
+                i++;
+                setTimeout(typeWriter, typingSpeed);
+            }
+        }
+        window.onload = typeWriter;
+
+        // Expandable Project Cards (using custom <card> tags)
+        const expandButtons = document.querySelectorAll('.expand-btn');
+        expandButtons.forEach(button => {
+            button.addEventListener('click', function(event) {
+                event.stopPropagation(); // Prevents clicks from triggering parent elements
+                this.classList.toggle('open');
+                
+                const projectCard = this.closest('card');
+                const content = projectCard.querySelector('.more-content');
+                content.classList.toggle('expanded');
+            });
+        });
+
+        // Expandable Skill Cards (Only one open at a time)
+        const skillCards = document.querySelectorAll('#skills card');
+        skillCards.forEach(card => {
+            card.addEventListener('click', function() {
+                const isActive = this.classList.contains('active');
+                
+                // First, close all skill cards
+                skillCards.forEach(c => c.classList.remove('active'));
+                
+                // If the card wasn't already open, open it
+                if (!isActive) {
+                    this.classList.add('active');
+                }
             });
         });
     </script>
