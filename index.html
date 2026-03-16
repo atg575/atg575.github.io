@@ -173,14 +173,29 @@
         card {
             display: block; /* Forces custom tag to behave like a standard block div */
             background: #F7F1EB;
+            min-height: 100px; 
             padding: 1rem;
             border-radius: 5px;
             color: #32502c;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
+/* --- Card Bullet Points --- */
+        .card-bullets {
+            text-align: left; /* Ensures bullets align to the left even if the card is centered */
+            padding-left: 1.5rem; /* Gives the bullets just enough breathing room */
+            margin-top: 0.5rem;
+            margin-bottom: 0;
+            font-size: 0.95rem; /* Makes the list slightly smaller for a cleaner hierarchy */
+        }
+
+        .card-bullets li {
+            margin-bottom: 0.3rem; /* Adds a tiny gap between each bullet point */
+        }
+
         /* --- Skill Card Specifics --- */
         #skills card {
+            text-align: center;
             text-align: center;
             font-weight: bold;
             cursor: pointer; /* Indicates they are clickable */
@@ -192,7 +207,11 @@
         }
 
         .skill-title {
-            display: block;
+            display: flex;
+            align-items: center;        /* Centers the text vertically */
+            justify-content: center;    /* Centers the text horizontally */
+            min-height: 60px;           /* Forces the area to be at least 80px tall */
+            width: 100%;
         }
 
         .skill-details {
@@ -207,7 +226,7 @@
         }
 
         #skills card.active .skill-details {
-            max-height: 150px; 
+            max-height: 250px; 
             opacity: 1;
             margin-top: 1rem;
             border-top: 1px solid #ccc;
@@ -283,7 +302,7 @@
         }
 
         .more-content.expanded {
-            max-height: 150px; 
+            max-height: 250px; 
             margin-top: 1rem;
         }
 
@@ -493,26 +512,31 @@
                 </div>
                 
                 <p>Spearheaded the fatigue testing regiment used to validate battery module current collector to cell interconnect weld reliability.</p>
-                
                 <div class="more-content">
-                    <p>Designed coupons and test setup, ran both quasi-static and fatigue tests, and compared empirical results against CAE modeled requirements to ensure long-term durability.</p>
-                    <p>Collaborated with product engineers to integrate test findings into design improvements.</p>
-                    <p>Broke down the improvements and significant findings to leadership and documented the results and methodology for future reference.</p>
+                    <ul class="card-bullets">
+                        <li>Designed coupons and test setup, ran both quasi-static and fatigue tests, and compared empirical results against CAE modeled requirements to ensure long-term durability.</li>
+                        <li>Collaborated with product engineers to integrate test findings into design improvements.</li>
+                        <li>Broke down the improvements and significant findings to leadership and documented the results and methodology for future reference.</li>
+                    <ul>
                 </div>
             </card>
 
             <card class="project">
                 <div class="project-header">
-                    <h3>FEA & Structural Mechanics Analysis</h3>
+                    <h3>Weld Clamp Design</h3>
                     <button class="expand-btn" aria-label="Toggle details">
                         <span class="chevron-line left"></span>
                         <span class="chevron-line right"></span>
                     </button>
                 </div>
-                <p>Modeled and analyzed advanced beam theory problems and fluid mechanics scenarios using Finite Element Analysis methodologies to validate structural integrity under varying load conditions.</p>
+                <p>Designed and commissioned a set of retrofit weld clamps to replicate production machine clamping footprints on a patent-pending weld mask used on the module pilot line.</p>
                 
                 <div class="more-content">
-                    <p>Utilized solid mechanics principles to isolate stress concentrations and iteratively optimize the truss designs.</p>
+                    <ul class="card-bullets">
+                        <li>Used a drafted interior oriface to assist the vision targeting system in placing precise welds.</li>
+                        <li>Collaborated with product engineers to integrate test findings into design improvements.</li>
+                        <li>Broke down the improvements and significant findings to leadership and documented the results and methodology for future reference.</li>
+                    <ul>
                 </div>
             </card>
 
@@ -534,7 +558,7 @@
 
         <section id="contact">
             <h2>Get In Touch</h2>
-            <p>I'm currently open to new opportunities and collaborations in engineering and software development.</p>
+            <p>I'm currently open to new opportunities in manufacturing and design engineering.</p>
             <p style="margin-top: 1rem;">
                 <strong>Email:</strong> <a href="mailto:alexevazquez@gmail.com" style="color: #074d1d; text-decoration: none;">alexevazquez@gmail.com</a><br>
                 <strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/alex-e-vazquez/" style="color: #074d1d; text-decoration: none;">linkedin.com/in/alexvazquez</a>
