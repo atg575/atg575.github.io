@@ -233,6 +233,47 @@
             padding-top: 0.5rem;
         }
 
+/* --- Skill Card Specifics --- */
+        #software card {
+            text-align: center;
+            text-align: center;
+            font-weight: bold;
+            cursor: pointer; /* Indicates they are clickable */
+        }
+
+        #software card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+        }
+
+        .software-title {
+            display: flex;
+            align-items: center;        /* Centers the text vertically */
+            justify-content: center;    /* Centers the text horizontally */
+            min-height: 60px;           /* Forces the area to be at least 80px tall */
+            width: 100%;
+        }
+
+        .software-details {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            font-size: 0.9rem;
+            font-weight: normal;
+            text-align: left;
+            transition: max-height 0.4s ease-in-out, opacity 0.3s ease-in-out, margin-top 0.4s ease-in-out; 
+            color: #555;
+        }
+
+        #software card.active .software-details {
+            max-height: 250px; 
+            opacity: 1;
+            margin-top: 1rem;
+            border-top: 1px solid #ccc;
+            padding-top: 0.5rem;
+        }
+
+
         /* --- Project Card Specifics --- */
         #projects card {
             background: white; 
@@ -446,45 +487,63 @@
                     </div>
                 </card>
                 <card>
-                    <span class="skill-title">CAD Design</span>
+                    <span class="skill-title">Product Design</span>
                     <div class="skill-details">
-                        <p>Designing geometries optimized for structural integrity and real-world assembly.</p>
+                        <p>Designing geometries optimized for ergonomics, structural integrity, and real-world assembly.</p>
                     </div>
                 </card>
                 <card>
                     <span class="skill-title">Process Development</span>
                     <div class="skill-details">
-                        <p>Streamlining manufacturing workflows and implementing continuous improvement methodologies.</p>
+                        <p>Streamlined part manufacturing using automation and continuous improvement methodologies.</p>
                     </div>
                 </card>
                 <card>
                     <span class="skill-title">Project Management</span>
                     <div class="skill-details">
-                        <p>Coordinating cross-functional efforts to deliver engineering solutions on tight timelines.</p>
+                        <p>Led large cross-functional scope projects from proposal through execution.</p>
                     </div>
                 </card>
                 <card>
                     <span class="skill-title">Test Development</span>
                     <div class="skill-details">
-                        <p>Designing physical test rigs and defining protocols to validate system reliability.</p>
+                        <p>Designed physical test setups and defined metrics to validate part or system reliability.</p>
                     </div>
                 </card>
                 <card>
-                    <span class="skill-title">DFM</span>
+                    <span class="skill-title">Design for Manufacturing (DFM)</span>
                     <div class="skill-details">
-                        <p>Optimizing materials and geometries to ensure scalable and cost-effective production.</p>
+                        <p>Optimized part materials and geometries to ensure scalable and cost-effective production.</p>
                     </div>
                 </card>
                 <card>
-                    <span class="skill-title">PFMEA</span>
+                    <span class="skill-title">Process Failure Mode and Effects Analysis (PFMEA)</span>
                     <div class="skill-details">
-                        <p>Identifying and mitigating potential process failures before they impact production.</p>
+                        <p>Identified and mitigated potential process failures before they impacted production.</p>
                     </div>
                 </card>
                 <card>
-                    <span class="skill-title">FEA</span>
+                    <span class="skill-title">Finite Element Analysis (FEA)</span>
                     <div class="skill-details">
-                        <p>Validating solid mechanics and heat transfer behaviors under rigorous load conditions.</p>
+                        <p>Validated solid mechanics and heat transfer behaviors under various load conditions.</p>
+                    </div>
+                </card>
+                <card>
+                    <span class="skill-title">Composite Manufacturing</span>
+                    <div class="skill-details">
+                        <p>Designed and manufactured complex molded parts and structures from composite materials such as carbon fiber and kevlar.</p>
+                    </div>
+                </card>
+                <card>
+                    <span class="skill-title">Laser Welding & Cutting</span>
+                    <div class="skill-details">
+                        <p>Welded battery interconnects and cut thin materials with high precision.</p>
+                    </div>
+                </card>
+                <card>
+                    <span class="skill-title">Geometric Dimensioning & Tolerancing (GD&T)</span>
+                    <div class="skill-details">
+                        <p>Created part drawings for manufacturing with precise dimensions and tolerances.</p>
                     </div>
                 </card>
             </grid>
@@ -493,9 +552,50 @@
         <section id="software">
             <h2>Software</h2>
             <grid>
-                <card>CAD</card>
-                <card>Coding</card>
-                <card>Data Analysis</card>
+                <card>
+                    <span class="software-title">CAD</span>
+                    <ul class="software-details card-bullets">
+                        <li>SolidWorks</li>
+                        <li>Autodesk Fusion</li>
+                        <li>Autodesk AutoCAD</li>
+                        <li>CATIA</li>
+                    </ul>
+                </card>
+                <card>
+                    <span class="software-title">Coding</span>
+                    <ul class="software-details card-bullets">
+                        <li>Python</li>
+                        <li>MATLAB</li>
+                        <li>SQL</li>
+                        <li>CNC G-code</li>
+                        <li>Arduino</li>
+                        <li>ROS2</li>
+                    </ul>
+                </card>
+                <card>
+                    <span class="software-title">Data Visualization</span>
+                    <ul class="software-details card-bullets">
+                        <li>Excel</li>
+                        <li>Databricks</li>
+                        <li>Hex</li>
+                        <li>MATLAB</li>
+                    </ul>
+                </card>
+                <card>
+                    <span class="software-title">Project Management</span>
+                    <ul class="software-details card-bullets">
+                        <li>JIRA</li>
+                        <li>Confluence</li>
+                    </ul>
+                </card>
+                <card>
+                    <span class="software-title">FEA</span>
+                    <ul class="software-details card-bullets">
+                        <li>SolidWorks</li>
+                        <li>Ansys</li>
+                        <li>Abaqus</li>
+                    </ul>
+                </card>
             </grid>
         </section>
 
@@ -517,7 +617,7 @@
                         <li>Designed coupons and test setup, ran both quasi-static and fatigue tests, and compared empirical results against CAE modeled requirements to ensure long-term durability.</li>
                         <li>Collaborated with product engineers to integrate test findings into design improvements.</li>
                         <li>Broke down the improvements and significant findings to leadership and documented the results and methodology for future reference.</li>
-                    <ul>
+                    </ul>
                 </div>
             </card>
 
@@ -630,6 +730,23 @@
                 
                 // First, close all skill cards
                 skillCards.forEach(c => c.classList.remove('active'));
+                
+                // If the card wasn't already open, open it
+                if (!isActive) {
+                    this.classList.add('active');
+                }
+            });
+        });
+
+        // Expandable Software Cards (Only one open at a time)
+        const softwareCards = document.querySelectorAll('#software card');
+        
+        softwareCards.forEach(card => {
+            card.addEventListener('click', function() {
+                const isActive = this.classList.contains('active');
+                
+                // First, close all software cards
+                softwareCards.forEach(c => c.classList.remove('active'));
                 
                 // If the card wasn't already open, open it
                 if (!isActive) {
