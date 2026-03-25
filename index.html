@@ -194,27 +194,27 @@
         }
 
         /* --- Skill Card Specifics --- */
-        #skills .card {
+        #skills .card, #software .card {
             text-align: center;
             text-align: center;
             font-weight: bold;
             cursor: pointer; /* Indicates they are clickable */
         }
 
-        #skills .card:hover {
+        #skills .card:hover, #software .card:hover {
             transform: translateY(-5px);
             box-shadow: 0 8px 15px rgba(0,0,0,0.1);
         }
 
-        .skill-title {
+        .skill-title, .software-title {
             display: flex;
             align-items: center;        /* Centers the text vertically */
             justify-content: center;    /* Centers the text horizontally */
-            min-height: 60px;           /* Forces the area to be at least 80px tall */
+            height: 80px;           /* Forces the area to be at least 80px tall */
             width: 100%;
         }
 
-        .skill-details {
+        .skill-details, .software-details {
             max-height: 0;
             opacity: 0;
             overflow: hidden;
@@ -225,47 +225,7 @@
             color: #555;
         }
 
-        #skills .card.active .skill-details {
-            max-height: 250px; 
-            opacity: 1;
-            margin-top: 1rem;
-            border-top: 1px solid #ccc;
-            padding-top: 0.5rem;
-        }
-
-/* --- Skill Card Specifics --- */
-        #software .card {
-            text-align: center;
-            text-align: center;
-            font-weight: bold;
-            cursor: pointer; /* Indicates they are clickable */
-        }
-
-        #software .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
-        }
-
-        .software-title {
-            display: flex;
-            align-items: center;        /* Centers the text vertically */
-            justify-content: center;    /* Centers the text horizontally */
-            min-height: 60px;           /* Forces the area to be at least 80px tall */
-            width: 100%;
-        }
-
-        .software-details {
-            max-height: 0;
-            opacity: 0;
-            overflow: hidden;
-            font-size: 0.9rem;
-            font-weight: normal;
-            text-align: left;
-            transition: max-height 0.4s ease-in-out, opacity 0.3s ease-in-out, margin-top 0.4s ease-in-out; 
-            color: #555;
-        }
-
-        #software .card.active .software-details {
+        #skills .card.active .skill-details, #software .card.active .software-details {
             max-height: 250px; 
             opacity: 1;
             margin-top: 1rem;
@@ -481,7 +441,7 @@
                 display: flex; /* Class to toggle via JS */
             }
 
-            grid {
+            .card-grid {
                 grid-template-columns: 1fr; /* Forces 1 card per row */
             }
 
@@ -820,7 +780,7 @@
                 event.stopPropagation(); // Prevents clicks from triggering parent elements
                 this.classList.toggle('open');
                 
-                const projectCard = this.closest('card');
+                const projectCard = this.closest('.card');
                 const content = projectCard.querySelector('.more-content');
                 content.classList.toggle('expanded');
             });
