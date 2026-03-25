@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Arvo:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* Base Styles and Reset */
         * {
@@ -380,6 +381,171 @@
             transition: 0.3s;
         }
 
+        /* --- Contact Links --- */
+        .contact-links {
+            display: flex;
+            flex-direction: column;
+            gap: 12px; /* Adds space between the email and LinkedIn rows */
+            margin-top: 1rem;
+        }
+
+        .contact-links a {
+            display: flex;
+            align-items: center;
+            gap: 10px; /* Adds space between the icon and the text */
+            color: #074d1d;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+
+        .contact-links a:hover {
+            color: #2B3621;
+        }
+
+        .contact-links i {
+            font-size: 1.5rem; /* Makes the icons slightly larger than the text */
+        }
+
+        /* --- Copy Button & Tooltip --- */
+        .email-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        #copy-email-btn {
+            background: none;
+            border: none;
+            color: #074d1d;
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.3s ease, transform 0.2s ease;
+        }
+
+        #copy-email-btn:hover {
+            color: #2B3621;
+            transform: scale(1.1); /* Slight pop effect on hover */
+        }
+
+        /* Hidden tooltip that appears after clicking */
+        .tooltip {
+            background-color: #2B3621;
+            color: #F7F1EB;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .tooltip.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* --- Dark Mode Toggle Button Styles --- */
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: #2B3621;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: color 0.3s ease, transform 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        /* --- Dark Mode Color Overrides --- */
+        body.dark-mode {
+            background-color: #12160e; /* Very dark green/black */
+            color: #e0e6d8; /* Soft light cream */
+        }
+
+        /* Force project headers to be pure white in dark mode */
+        body.dark-mode #projects .card h3 {
+            color: #ffffff; 
+        }
+
+        /* Ensure the short description paragraph right below the header is also bright and readable */
+        body.dark-mode #projects .card > p {
+            color: #f0f0f0; 
+        }
+
+        /* Turn the spinning image logo pure white in dark mode */
+        body.dark-mode #spin-logo {
+            filter: brightness(0) invert(1);
+        }
+
+        /* Nav & Footer */
+        body.dark-mode nav, 
+        body.dark-mode footer, 
+        body.dark-mode nav ul {
+            background-color: #12160e;
+            color: #e0e6d8;
+        }
+
+        body.dark-mode nav a, 
+        body.dark-mode .nav-name,
+        body.dark-mode .theme-toggle,
+        body.dark-mode .hamburger span {
+            color: #e0e6d8;
+            background-color: transparent;
+        }
+
+        /* Hamburger lines in dark mode */
+        body.dark-mode .hamburger span {
+            background-color: #e0e6d8; 
+        }
+
+        /* Sections & Cards */
+        body.dark-mode section, 
+        body.dark-mode #projects .card {
+            background-color: #1d2416;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+
+        body.dark-mode section h2, 
+        body.dark-mode .card h3 {
+            color: #e0e6d8;
+            border-bottom-color: #2B3621;
+        }
+
+        body.dark-mode .card {
+            background-color: #2B3621;
+            color: #e0e6d8;
+        }
+
+        /* Text details inside cards */
+        body.dark-mode .skill-details, 
+        body.dark-mode .software-details, 
+        body.dark-mode .more-content {
+            color: #a3b19b;
+            border-top-color: #3a4d2f;
+        }
+
+        /* Contact Links & Copy Button */
+        body.dark-mode .contact-links a, 
+        body.dark-mode #copy-email-btn {
+            color: #8fb37d; /* Lighter green for better contrast against dark background */
+        }
+
+        body.dark-mode .contact-links a:hover, 
+        body.dark-mode #copy-email-btn:hover {
+            color: #e0e6d8;
+        }
+
         /* --- Mobile Modifications --- */
         @media (max-width: 768px) {
             nav {
@@ -505,6 +671,7 @@
             <li><a href="#software">Software</a></li>
             <li><a href="#projects">Projects</a></li>
             <li><a href="#contact">Contact</a></li>
+            <li><button id="dark-mode-toggle" class="theme-toggle" aria-label="Toggle Dark Mode"><i class="fa-solid fa-moon"></i></button></li>
         </ul>
 
         <div class="hamburger" id="hamburger-menu">
@@ -734,12 +901,22 @@
         </section>
 
         <section id="contact">
-            <h2>Get In Touch</h2>
-            <p>I'm currently open to new opportunities in manufacturing and design engineering.</p>
-            <p style="margin-top: 1rem;">
-                <strong>Email:</strong> <a href="mailto:alexevazquez@gmail.com" style="color: #074d1d; text-decoration: none;">alexevazquez@gmail.com</a><br>
-                <strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/alex-e-vazquez/" style="color: #074d1d; text-decoration: none;">linkedin.com/in/alex-e-vazquez</a>
-            </p>
+            <h2>Connect With Me!</h2>
+            <div class="contact-links">
+                <div class="email-container">
+                    <a href="mailto:alexevazquez@gmail.com">
+                        <i class="fa-solid fa-envelope"></i> alexevazquez@gmail.com
+                    </a>
+                    <button id="copy-email-btn" aria-label="Copy email address" title="Copy to clipboard">
+                        <i class="fa-regular fa-copy"></i>
+                    </button>
+                    <span id="copy-tooltip" class="tooltip">Copied!</span>
+                </div>
+
+                <a href="https://www.linkedin.com/in/alex-e-vazquez/" target="_blank">
+                    <i class="fa-brands fa-linkedin"></i> linkedin.com/in/alex-e-vazquez
+                </a>
+            </div>
         </section>
     </div>
 
@@ -840,7 +1017,83 @@
             document.querySelector('nav ul').classList.toggle('show');
         });
 
-        
+        // Copy to Clipboard Functionality
+        document.getElementById('copy-email-btn').addEventListener('click', function() {
+            const emailToCopy = "alexevazquez@gmail.com";
+            
+            // Write the text to the clipboard
+            navigator.clipboard.writeText(emailToCopy).then(() => {
+                const tooltip = document.getElementById('copy-tooltip');
+                const icon = this.querySelector('i');
+
+                // Show the tooltip and change the icon to a checkmark
+                tooltip.classList.add('show');
+                icon.classList.remove('fa-copy', 'fa-regular');
+                icon.classList.add('fa-check', 'fa-solid'); 
+
+                // Reset everything back to normal after 2 seconds
+                setTimeout(() => {
+                    tooltip.classList.remove('show');
+                    icon.classList.remove('fa-check', 'fa-solid');
+                    icon.classList.add('fa-copy', 'fa-regular');
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy text: ', err);
+            });
+        });
+
+        // Dark Mode Toggle Functionality
+        const darkModeToggle = document.getElementById('dark-mode-toggle');
+        const body = document.body;
+        const themeIcon = darkModeToggle.querySelector('i');
+
+        // Helper functions to handle the visual changes
+        function enableDarkMode() {
+            body.classList.add('dark-mode');
+            themeIcon.classList.replace('fa-moon', 'fa-sun');
+        }
+
+        function disableDarkMode() {
+            body.classList.remove('dark-mode');
+            themeIcon.classList.replace('fa-sun', 'fa-moon');
+        }
+
+        // 1. Check local storage AND system preferences
+        const currentTheme = localStorage.getItem('theme');
+        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+
+        // Apply the correct theme on load
+        if (currentTheme === 'dark') {
+            enableDarkMode();
+        } else if (currentTheme === 'light') {
+            disableDarkMode();
+        } else if (systemPrefersDark.matches) {
+            // If no explicit choice is saved, fall back to the device's system preference
+            enableDarkMode();
+        }
+
+        // 2. Listen for clicks on the toggle button (Manual Override)
+        darkModeToggle.addEventListener('click', function() {
+            if (body.classList.contains('dark-mode')) {
+                disableDarkMode();
+                localStorage.setItem('theme', 'light'); 
+            } else {
+                enableDarkMode();
+                localStorage.setItem('theme', 'dark'); 
+            }
+        });
+
+        // 3. Listen for changes to system settings in real-time
+        systemPrefersDark.addEventListener('change', (e) => {
+            // Only auto-switch if the user hasn't explicitly saved a preference yet
+            if (!localStorage.getItem('theme')) {
+                if (e.matches) {
+                    enableDarkMode();
+                } else {
+                    disableDarkMode();
+                }
+            }
+        });
     </script>
 
 </body>
