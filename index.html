@@ -402,6 +402,24 @@
             margin-bottom: 0.5rem;
         }
 
+        /* Hide hamburger on desktop */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+            position: absolute;
+            right: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background-color: #2B3621;
+            transition: 0.3s;
+        }
+
         /* --- Mobile Responsiveness --- */
         @media (max-width: 768px) {
             nav ul {
@@ -438,7 +456,26 @@
             .expand-btn {
                 align-self: flex-end;
             }
+
+            .hamburger {
+                display: flex; /* Show on mobile */
+            }
+            nav ul {
+                display: none; /* Hide links by default */
+                width: 100%;
+                background-color: #F7F1EB;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                padding-bottom: 1rem;
+                box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            }
+            nav ul.show {
+                display: flex; /* Class to toggle via JS */
+            }
         }
+            
+
 
     </style>
 </head>
@@ -459,6 +496,12 @@
             <li><a href="#projects">Projects</a></li>
             <li><a href="#contact">Contact</a></li>
         </ul>
+
+        <div class="hamburger" id="hamburger-menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
     </nav>
 
     <header id="main-header">
@@ -778,6 +821,12 @@
                 }
             });
         });
+
+        document.getElementById('hamburger-menu').addEventListener('click', function() {
+            document.querySelector('nav ul').classList.toggle('show');
+        });
+
+        
     </script>
 
 </body>
