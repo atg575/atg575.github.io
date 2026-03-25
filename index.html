@@ -162,7 +162,7 @@
         }
 
         /* --- Custom Grid Layout --- */
-        grid {
+        .card-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 1rem;
@@ -170,7 +170,7 @@
         }
 
         /* --- Custom Global Card Styles --- */
-        card {
+        .card {
             display: block; /* Forces custom tag to behave like a standard block div */
             background: #F7F1EB;
             min-height: 100px; 
@@ -194,14 +194,14 @@
         }
 
         /* --- Skill Card Specifics --- */
-        #skills card {
+        #skills .card {
             text-align: center;
             text-align: center;
             font-weight: bold;
             cursor: pointer; /* Indicates they are clickable */
         }
 
-        #skills card:hover {
+        #skills .card:hover {
             transform: translateY(-5px);
             box-shadow: 0 8px 15px rgba(0,0,0,0.1);
         }
@@ -225,7 +225,7 @@
             color: #555;
         }
 
-        #skills card.active .skill-details {
+        #skills .card.active .skill-details {
             max-height: 250px; 
             opacity: 1;
             margin-top: 1rem;
@@ -234,14 +234,14 @@
         }
 
 /* --- Skill Card Specifics --- */
-        #software card {
+        #software .card {
             text-align: center;
             text-align: center;
             font-weight: bold;
             cursor: pointer; /* Indicates they are clickable */
         }
 
-        #software card:hover {
+        #software .card:hover {
             transform: translateY(-5px);
             box-shadow: 0 8px 15px rgba(0,0,0,0.1);
         }
@@ -265,7 +265,7 @@
             color: #555;
         }
 
-        #software card.active .software-details {
+        #software .card.active .software-details {
             max-height: 250px; 
             opacity: 1;
             margin-top: 1rem;
@@ -275,13 +275,13 @@
 
 
         /* --- Project Card Specifics --- */
-        #projects card {
+        #projects .card {
             background: white; 
             margin-bottom: 1.5rem;
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
         }
 
-        #projects card h3 {
+        #projects .card h3 {
             color: #074d1d;
             margin-bottom: 0; 
         }
@@ -420,7 +420,7 @@
             transition: 0.3s;
         }
 
-        /* --- Mobile Responsiveness --- */
+        /* --- Mobile Modifications --- */
         @media (max-width: 768px) {
             nav ul {
                 flex-direction: column;
@@ -431,12 +431,20 @@
             }
 
             header h1 {
-                font-size: 2.2rem;
+                    font-size: 2.2rem;
+                    min-height: 80px; /* Adjust based on exact line-height */
+                }
             }
             
             header p {
                 font-size: 1rem;
             }
+
+            #spin-logo {
+                    left: 1rem; /* Pulls it closer to the left edge */
+                    height: 32px; /* Slightly smaller to match mobile proportions */
+                }
+            
 
             .header-container {
                 flex-direction: column-reverse; /* Puts your face on top, text below on mobile */
@@ -473,9 +481,34 @@
             nav ul.show {
                 display: flex; /* Class to toggle via JS */
             }
+
+            grid {
+                grid-template-columns: 1fr; /* Forces 1 card per row */
+            }
+
+            header {
+                padding: 3rem 1.5rem;
+            }
+            .container {
+                padding: 1rem;
+            }
+            section {
+                padding: 1.5rem;
+            }
+        
+
+        .expand-btn {
+            width: 44px; /* Increased from 40px */
+            height: 44px; /* Increased from 40px */
+        }
+
+        .main-profile-pic {
+            width: 160px;
+            height: 160px;
+            margin-bottom: 1rem;
         }
             
-
+        
 
     </style>
 </head>
@@ -522,86 +555,86 @@
 
         <section id="skills">
             <h2>Technical Skills</h2>
-            <grid>
-                <card>
+            <div class="card-grid">
+                <div class="card">
                     <span class="skill-title">Data Analysis</span>
                     <div class="skill-details">
                         <p>Parsed, visualized, and presented insights from complex test data.</p>
                     </div>
-                </card>
-                <card>
+                </div>
+                <div class="card">
                     <span class="skill-title">Product Design</span>
                     <div class="skill-details">
                         <p>Designing geometries optimized for ergonomics, structural integrity, and real-world assembly.</p>
                     </div>
-                </card>
-                <card>
+                </div>
+                <div class="card">
                     <span class="skill-title">Process Development</span>
                     <div class="skill-details">
                         <p>Streamlined part manufacturing using automation and continuous improvement methodologies.</p>
                     </div>
-                </card>
-                <card>
+                </div>
+                <div class="card">
                     <span class="skill-title">Project Management</span>
                     <div class="skill-details">
                         <p>Led large cross-functional scope projects from proposal through execution.</p>
                     </div>
-                </card>
-                <card>
+                </div>
+                <div class="card">
                     <span class="skill-title">Test Development</span>
                     <div class="skill-details">
                         <p>Designed physical test setups and defined metrics to validate part or system reliability.</p>
                     </div>
-                </card>
-                <card>
+                </div>
+                <div class="card">
                     <span class="skill-title">Design for Manufacturing (DFM)</span>
                     <div class="skill-details">
                         <p>Optimized part materials and geometries to ensure scalable and cost-effective production.</p>
                     </div>
-                </card>
-                <card>
+                </div>
+                <div class="card">
                     <span class="skill-title">Process Failure Mode and Effects Analysis (PFMEA)</span>
                     <div class="skill-details">
                         <p>Identified and mitigated potential process failures before they impacted production.</p>
                     </div>
-                </card>
-                <card>
+                </div>
+                <div class="card">
                     <span class="skill-title">Finite Element Analysis (FEA)</span>
                     <div class="skill-details">
                         <p>Validated solid mechanics and heat transfer behaviors under various load conditions.</p>
                     </div>
-                </card>
-                <card>
+                </div>
+                <div class="card">
                     <span class="skill-title">Composite Manufacturing</span>
                     <div class="skill-details">
                         <p>Designed and manufactured complex molded parts and structures from composite materials such as carbon fiber and kevlar.</p>
                     </div>
-                </card>
-                <card>
+                </div>
+                <div class="card">
                     <span class="skill-title">Laser Welding & Cutting</span>
                     <div class="skill-details">
                         <p>Welded battery interconnects and cut thin materials with high precision.</p>
                     </div>
-                </card>
-                <card>
+                </div>
+                <div class="card">
                     <span class="skill-title">Geometric Dimensioning & Tolerancing (GD&T)</span>
                     <div class="skill-details">
                         <p>Created part drawings for manufacturing with precise dimensions and tolerances.</p>
                     </div>
-                </card>
-                <card>
+                </div>
+                <div class="card">
                     <span class="skill-title">Fixturing Design</span>
                     <div class="skill-details">
                         <p>Designed and implemented custom fixtures to streamline various part manufacturing processes.</p>
                     </div>
-                </card>
-            </grid>
+                </div>
+            </div>
         </section>
 
         <section id="software">
             <h2>Software</h2>
-            <grid>
-                <card>
+            <div class="grid">
+                <div class="card">
                     <span class="software-title">Computer Aided Design (CAD)</span>
                     <ul class="software-details card-bullets">
                         <li>SolidWorks</li>
@@ -609,8 +642,8 @@
                         <li>Autodesk AutoCAD</li>
                         <li>CATIA</li>
                     </ul>
-                </card>
-                <card>
+                </div>
+                <div class="card">
                     <span class="software-title">Programming Languages</span>
                     <ul class="software-details card-bullets">
                         <li>Python</li>
@@ -620,8 +653,8 @@
                         <li>Arduino</li>
                         <li>ROS2</li>
                     </ul>
-                </card>
-                <card>
+                </div>
+                <div class="card">
                     <span class="software-title">Data Visualization Tools</span>
                     <ul class="software-details card-bullets">
                         <li>Excel</li>
@@ -629,43 +662,43 @@
                         <li>Hex</li>
                         <li>MATLAB</li>
                     </ul>
-                </card>
-                <card>
+                </div>
+                <div class="card">
                     <span class="software-title">Project Management</span>
                     <ul class="software-details card-bullets">
                         <li>JIRA</li>
                         <li>Confluence</li>
                     </ul>
-                </card>
-                <card>
+                </div>
+                <div class="card">
                     <span class="software-title">Finite Element Analysis (FEA)</span>
                     <ul class="software-details card-bullets">
                         <li>SolidWorks</li>
                         <li>Ansys</li>
                         <li>Abaqus</li>
                     </ul>
-                </card>
-                <card>
+                </div>
+                <div class="card">
                     <span class="software-title">Computational Fluid Dynamics (CFD)</span>
                     <ul class="software-details card-bullets">
                         <li>SolidWorks</li>
                         <li>Star-CCM+</li>
                     </ul>
-                </card>
-                <card>
+                </div>
+                <div class="card">
                     <span class="software-title">Graphic Design</span>
                     <ul class="software-details card-bullets">
                         <li>Adobe Photoshop</li>
                         <li>Adobe Illustrator</li>
                     </ul>
-                </card>
-            </grid>
+                </div>
+            </div>
         </section>
 
         <section id="projects">
             <h2>Rivian Projects</h2>
             
-            <card class="project">
+            <div class="card project">
                 <div class="project-header">
                     <h3>Battery Interconnect Fatigue Testing</h3>
                     <button class="expand-btn" aria-label="Toggle details">
@@ -682,9 +715,9 @@
                         <li>Broke down the improvements and significant findings to leadership and documented the results and methodology for future reference.</li>
                     </ul>
                 </div>
-            </card>
+            </div>
 
-            <card class="project">
+            <div class="card project">
                 <div class="project-header">
                     <h3>Weld Clamp Design</h3>
                     <button class="expand-btn" aria-label="Toggle details">
@@ -701,9 +734,9 @@
                         <li>Broke down the improvements and significant findings to leadership and documented the results and methodology for future reference.</li>
                     </ul>
                 </div>
-            </card>
+            </div>
 
-            <card class="project">
+            <div class="card project">
                 <div class="project-header">
                     <h3>Module Busbar Heat Stake Rework Testing</h3>
                     <button class="expand-btn" aria-label="Toggle details">
@@ -720,7 +753,7 @@
                         <li>Created a Job Execution Sheet instructing technicians on how to complete the rework process.</li>
                     </ul>
                 </div>
-            </card>
+            </div>
         </section>
 
         <section id="contact">
@@ -790,7 +823,7 @@
         });
 
         // Expandable Skill Cards (Only one open at a time)
-        const skillCards = document.querySelectorAll('#skills card');
+        const skillCards = document.querySelectorAll('#skills .card');
         skillCards.forEach(card => {
             card.addEventListener('click', function() {
                 const isActive = this.classList.contains('active');
@@ -799,14 +832,18 @@
                 skillCards.forEach(c => c.classList.remove('active'));
                 
                 // If the card wasn't already open, open it
-                if (!isActive) {
-                    this.classList.add('active');
-                }
+            if (!isActive) {
+                this.classList.add('active');
+                    // Add this brief timeout to allow the CSS height transition to start
+                setTimeout(() => {
+                    this.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100); 
+            }
             });
         });
 
         // Expandable Software Cards (Only one open at a time)
-        const softwareCards = document.querySelectorAll('#software card');
+        const softwareCards = document.querySelectorAll('#software .card');
         
         softwareCards.forEach(card => {
             card.addEventListener('click', function() {
