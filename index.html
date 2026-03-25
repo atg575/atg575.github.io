@@ -382,9 +382,13 @@
 
         /* --- Mobile Modifications --- */
         @media (max-width: 768px) {
+            nav {
+                min-height: 57px; /* Locks the mobile nav bar to the exact same height as the desktop nav */
+            }
+
             nav ul {
                 flex-direction: column;
-                gap: 0.5rem;
+                gap: 2rem;
                 padding: 1rem 0;
                 margin-left: 0; /* Centers nav links on mobile */
                 align-items: center;
@@ -400,8 +404,8 @@
             }
 
             #spin-logo {
-                    left: 1rem; /* Pulls it closer to the left edge */
-                    height: 32px; /* Slightly smaller to match mobile proportions */
+                    left: 2rem; /* Pulls it closer to the left edge */
+                    height: 40px; /* Slightly smaller to match mobile proportions */
                 }
             
 
@@ -411,7 +415,15 @@
             }
             
             .nav-profile {
-                display: none; /* Hides the small nav name on phones to save space */
+                /* We removed display: none so the scroll script works again! */
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                width: max-content;
+            }
+
+            .nav-name {
+                font-size: 1rem; /* Slightly scales down the text to prevent overlapping the menu */
             }
 
             .project-header {
@@ -426,7 +438,9 @@
 
             .hamburger {
                 display: flex; /* Show on mobile */
+                right: 1.5rem; /* Adjusted to be closer to the edge on mobile */
             }
+            
             nav ul {
                 display: none; /* Hide links by default */
                 width: 100%;
@@ -464,7 +478,6 @@
             .main-profile-pic {
                 width: 160px;
                 height: 160px;
-                margin-bottom: 1rem;
             }
             
              /* Adjust typewriter font size on mobile */
