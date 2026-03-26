@@ -1538,14 +1538,19 @@
                     navMenu.classList.remove('show');
                 }
 
-                // 2. Auto-Open the accordion for the clicked section
+                // 2. Auto-Open the accordion for the clicked section AND close others
                 const targetId = this.getAttribute('href');
                 if (targetId && targetId.startsWith('#')) {
                     const targetSection = document.querySelector(targetId);
                     if (targetSection) {
-                        // Find any accordion groups inside the destination section and force them open
-                        const accordions = targetSection.querySelectorAll('.company-group');
-                        accordions.forEach(acc => acc.classList.add('active'));
+                        
+                        // --- NEW: Close ALL section accordions on the page first ---
+                        const allAccordions = document.querySelectorAll('.company-group');
+                        allAccordions.forEach(acc => acc.classList.remove('active'));
+
+                        // --- Open ONLY the accordion inside the section we just clicked ---
+                        const targetAccordions = targetSection.querySelectorAll('.company-group');
+                        targetAccordions.forEach(acc => acc.classList.add('active'));
                     }
                 }
             });
