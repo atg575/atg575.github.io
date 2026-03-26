@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alex Vazquez | Engineering Portfolio</title>
-    <link rel="icon" href="logo2.png" type="image/x-icon">
+    <link id="favicon" rel="icon" href="logo2.png" type="image/png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Arvo:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
@@ -77,9 +77,10 @@
             object-fit: cover; /* Keeps the image from stretching */
         }
 
-        .nav-name {
-            font-weight: bold;
-            color: #2B3621;
+        .nav-name { 
+            font-weight: bold; 
+            color: #2B3621; 
+            white-space: nowrap; /* Forces "Alex Vazquez" to stay on one single line */
         }
 
         /* When the 'scrolled' class is added via JS, show the profile */
@@ -108,9 +109,11 @@
             flex: 1; 
         }
 
-        header h1 {
-            font-size: 5rem;
-            margin-bottom: 0.5rem;
+        header h1 { 
+            /* clamp() sets a minimum size, a preferred fluid size, and a maximum size */
+            font-size: clamp(2.5rem, 8vw, 5rem); 
+            margin-bottom: 0.5rem; 
+            white-space: nowrap; /* Prevents the giant text from wrapping awkwardly */
         }
 
         header p {
@@ -269,6 +272,8 @@
             top: 50%;
             transform: translateY(-50%) rotate(0deg); 
             will-change: transform; 
+            transition: filter 0.3s ease; 
+            cursor: pointer;/* Smooth transition for filter changes in dark mode */
         }
 
         .arvo-regular {
@@ -475,17 +480,37 @@
 
         /* Force project headers to be pure white in dark mode */
         body.dark-mode #projects .card h3 {
-            color: #ffffff; 
+            color: #e0e6d8; 
         }
 
         /* Ensure the short description paragraph right below the header is also bright and readable */
         body.dark-mode #projects .card > p {
-            color: #f0f0f0; 
+            color: #e0e6d8; 
         }
 
         /* Turn the spinning image logo pure white in dark mode */
         body.dark-mode #spin-logo {
             filter: brightness(0) invert(1);
+        }
+
+        /* --- Dark Mode Expand Buttons --- */
+        body.dark-mode .expand-btn {
+            background-color: #3a4d2f; /* A muted, softer dark green that matches the theme */
+        }
+
+        body.dark-mode .expand-btn:hover {
+            background-color: #4a633c; /* Slightly lighter on hover so it still feels interactive */
+        }
+
+        body.dark-mode .chevron-line {
+            background-color: #e0e6d8; /* Ensures the plus/minus icon matches your dark mode text */
+        }
+
+        /* --- Dark Mode Card Hover Effects --- */
+        body.dark-mode #skills .card:hover, 
+        body.dark-mode #software .card:hover {
+            background-color: #354329; /* Slightly lighter than the base #2B3621 to create a highlight */
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.6); /* Much stronger, darker shadow for depth */
         }
 
         /* Nav & Footer */
@@ -546,6 +571,11 @@
             color: #e0e6d8;
         }
 
+        /* --- Prevent Transition Flash on Window Resize --- */
+        .resize-stopper * {
+            transition: none !important;
+        }
+
         /* --- Mobile Modifications --- */
         @media (max-width: 768px) {
             nav {
@@ -559,11 +589,6 @@
                 margin-left: 0; /* Centers nav links on mobile */
                 align-items: center;
             }
-
-            header h1 {
-                    font-size: 2.2rem;
-                    min-height: 80px; /* Adjust based on exact line-height */
-                }
             
             header p {
                 font-size: 1rem;
@@ -592,14 +617,17 @@
                 font-size: 1rem; /* Slightly scales down the text to prevent overlapping the menu */
             }
 
-            .project-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 10px;
+            .project-header { 
+                flex-direction: row; /* Forces them to stay side-by-side */
+                align-items: center; /* Centers them vertically */
+                justify-content: space-between; /* Pushes the button to the far right */
+                gap: 15px; /* Adds breathing room between the text and button */
             }
-
-            .expand-btn {
-                align-self: flex-end;
+            .expand-btn { 
+                align-self: auto; /* Resets the previous mobile alignment */
+                width: 44px; 
+                height: 44px; 
+                flex-shrink: 0; /* CRITICAL: Prevents long titles from squishing the button into an oval */
             }
 
             .hamburger {
@@ -607,18 +635,31 @@
                 right: 1.5rem; /* Adjusted to be closer to the edge on mobile */
             }
             
-            nav ul {
-                display: none; /* Hide links by default */
-                width: 100%;
-                background-color: #F7F1EB;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                padding-bottom: 1rem;
-                box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            nav ul { 
+                display: flex; /* We keep it flex so the items align correctly */
+                flex-direction: column; 
+                gap: 0.5rem; 
+                margin-left: 0; 
+                align-items: center; 
+                width: 100%; 
+                position: absolute; 
+                top: 100%; 
+                left: 0; 
+                box-shadow: 0 4px 6px rgba(0,0,0,0.05); 
+                
+                /* --- New Animation Rules --- */
+                padding: 0; /* Removes padding so it shrinks completely flat */
+                max-height: 0; /* Collapses the menu */
+                opacity: 0; /* Makes it invisible */
+                visibility: hidden; /* Prevents clicking links when closed */
+                transition: max-height 0.4s ease-in-out, opacity 0.4s ease-in-out, padding 0.4s ease-in-out, visibility 0.4s;
             }
-            nav ul.show {
-                display: flex; /* Class to toggle via JS */
+            
+            nav ul.show { 
+                max-height: 400px; /* Needs to be taller than the actual content to allow the slide */
+                opacity: 1; 
+                visibility: visible;
+                padding: 1rem 0; /* Restores the padding smoothly */
             }
 
             .card-grid {
@@ -694,7 +735,7 @@
     <div class="container">
         <section id="about">
             <h2>About Me</h2>
-            <p>Hello! I'm Alex. I'm a fifth-year senior at the University of Florida studying mechanical engineering with experience in automotive system and part design, analysis, testing, and manufacturing. </p>
+            <p>Hello! I'm Alex. I'm a graduating senior at the University of Florida studying mechanical engineering. Check out some of my experience below! </p>
         </section>
 
         <section id="skills">
@@ -709,7 +750,7 @@
                 <div class="card">
                     <span class="skill-title">Product Design</span>
                     <div class="skill-details">
-                        <p>Designing geometries optimized for ergonomics, structural integrity, and real-world assembly.</p>
+                        <p>Designed parts and assemblies for ergonomics, structural integrity, and real-world assembly.</p>
                     </div>
                 </div>
                 <div class="card">
@@ -888,7 +929,7 @@
                         <span class="chevron-line right"></span>
                     </button>
                 </div>
-                <p>Conducted comparison trials for the rework adhesive used to adhere busbars to the module frame, testing various application methods and volume distributions.</p>
+                <p>Conducted comparison trials for the rework adhesive used to adhere busbars to the module frame.</p>
                 
                 <div class="more-content">
                     <ul class="card-bullets">
@@ -1047,15 +1088,21 @@
         const body = document.body;
         const themeIcon = darkModeToggle.querySelector('i');
 
-        // Helper functions to handle the visual changes
+        // Grab the favicon element
+        const favicon = document.getElementById('favicon');
+
         function enableDarkMode() {
             body.classList.add('dark-mode');
             themeIcon.classList.replace('fa-moon', 'fa-sun');
+            // The ?v=dark forces the browser to bypass its cache
+            if (favicon) favicon.href = "logo2-white.png?v=dark"; 
         }
 
         function disableDarkMode() {
             body.classList.remove('dark-mode');
             themeIcon.classList.replace('fa-sun', 'fa-moon');
+            // The ?v=light forces the browser to bypass its cache
+            if (favicon) favicon.href = "logo2.png?v=light"; 
         }
 
         // 1. Check local storage AND system preferences
@@ -1093,6 +1140,42 @@
                     disableDarkMode();
                 }
             }
+        });
+
+        // --- Scroll to Top on Logo Click ---
+        document.getElementById('spin-logo').addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // --- Auto-Close Mobile Menu on Link Click ---
+        const navMenu = document.querySelector('nav ul');
+        const navLinks = document.querySelectorAll('nav ul li a');
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                // If the mobile menu is open, close it
+                if (navMenu.classList.contains('show')) {
+                    navMenu.classList.remove('show');
+                }
+            });
+        });
+
+        // --- Prevent Transition Flash on Window Resize ---
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+            // Add the class to stop transitions
+            document.body.classList.add('resize-stopper');
+            
+            // Clear the timer if they are still actively resizing
+            clearTimeout(resizeTimer);
+            
+            // Remove the class 400ms after they stop resizing
+            resizeTimer = setTimeout(() => {
+                document.body.classList.remove('resize-stopper');
+            }, 400);
         });
     </script>
 
