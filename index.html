@@ -655,16 +655,25 @@
             transform: rotate(180deg); /* Flips the chevron up when open */
         }
 
+        /* --- The Smooth Grid Accordion --- */
         .company-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.4s ease-in-out, padding 0.4s ease-in-out;
-            padding: 0 1.5rem;
+            display: grid;
+            grid-template-rows: 0fr; /* Starts completely collapsed */
+            transition: grid-template-rows 0.5s cubic-bezier(0.25, 1, 0.5, 1); /* Buttery smooth iOS-style curve */
         }
 
         .company-group.active .company-content {
-            max-height: 2000px; /* An arbitrarily large number to allow room for the cards to slide down */
-            padding-bottom: 1.5rem;
+            grid-template-rows: 1fr; /* Expands to exactly the height of the content */
+        }
+
+        .company-content-inner {
+            overflow: hidden; /* Hides the content while it is squished */
+            padding: 0 1.5rem;
+            transition: padding 0.5s ease;
+        }
+
+        .company-group.active .company-content-inner {
+            padding-bottom: 1.5rem; /* Adds the bottom padding smoothly as it opens */
         }
             
         /* --- Company Header Alignment --- */
@@ -719,7 +728,7 @@
             }
 
             .nav-name {
-                font-size: 1rem; /* Slightly scales down the text to prevent overlapping the menu */
+                flex: 1; /* Slightly scales down the text to prevent overlapping the menu */
             }
 
             .project-header { 
@@ -993,12 +1002,14 @@
                     <div class="company-title-wrap">
                         <img src="Rivian_Logo.png" alt="Rivian" class="company-logo">
                         <h3>Rivian</h3>
+                        <p>Manufacturing Engineering Intern, Battery</p>
+                        <p>May 2025 - December 2025</p>
                     </div>
                     <i class="fa-solid fa-chevron-down accordion-icon"></i>
                 </button>
                 
                 <div class="company-content">
-                    
+                    <div class="company-content-inner">
                     <div class="card project">
                         <div class="project-header">
                             <div class="project-title-wrap">
@@ -1058,7 +1069,7 @@
                             </ul>
                         </div>
                     </div>
-
+                    </div>
                 </div>
             </div>
 
