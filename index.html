@@ -364,8 +364,30 @@
         .project-header {
             display: flex;
             justify-content: space-between; 
-            align-items: center; 
+            align-items: left; 
             margin-bottom: 0.5rem;
+        }
+
+        /* --- Project Header Logos --- */
+        .project-title-wrap {
+            display: flex;
+            align-items: center;
+            gap: 1rem; /* 1rem is usually the "sweet spot" for reasonable spacing */
+            flex: 1; /* Forces this container to fill the space, pushing the button to the far right */
+            justify-content: flex-start; /* Pins the logo and text to the absolute left edge */
+        }
+
+        .project-title-wrap h3 {
+            text-align: left; /* Ensures that if the title breaks onto two lines, it aligns neatly to the left */
+            line-height: 1.3; /* Gives the text a little breathing room if it does wrap */
+            margin: 0;
+        }
+
+        .company-logo {
+            height: 24px; 
+            width: auto;
+            object-fit: contain;
+            flex-shrink: 0; /* Prevents the logo from being squished if the title gets really long */
         }
 
         /* Hide hamburger on desktop */
@@ -411,6 +433,11 @@
 
         .contact-links i {
             font-size: 1.5rem; /* Makes the icons slightly larger than the text */
+        }
+
+        /* Make the LinkedIn icon larger */
+        .contact-links .fa-linkedin {
+            font-size: 1.8rem; /* Increased from 1.5rem */
         }
 
         /* --- Copy Button & Tooltip --- */
@@ -571,11 +598,89 @@
             color: #e0e6d8;
         }
 
+        body.dark-mode .company-logo {
+            filter: brightness(0) invert(1);
+        }
+
+        body.dark-mode .company-group {
+            background-color: #2B3621;
+        }
+
+        body.dark-mode .company-accordion {
+            color: #ffffff;
+        }
+
         /* --- Prevent Transition Flash on Window Resize --- */
         .resize-stopper * {
             transition: none !important;
         }
 
+        /* --- Company Dropdown Accordions --- */
+        .company-group {
+            margin-bottom: 1.5rem;
+            border-radius: 8px;
+            background-color: #F7F1EB; /* Gives the container a subtle background */
+            overflow: hidden;
+            transition: background-color 0.3s ease;
+        }
+
+        .company-accordion {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            color: #074d1d;
+        }
+
+        .company-accordion:hover {
+            background-color: rgba(0,0,0,0.03); /* Subtle hover effect */
+        }
+
+        .company-accordion h3 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+        .accordion-icon {
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+            color: inherit;
+        }
+
+        .company-group.active .accordion-icon {
+            transform: rotate(180deg); /* Flips the chevron up when open */
+        }
+
+        .company-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-in-out, padding 0.4s ease-in-out;
+            padding: 0 1.5rem;
+        }
+
+        .company-group.active .company-content {
+            max-height: 2000px; /* An arbitrarily large number to allow room for the cards to slide down */
+            padding-bottom: 1.5rem;
+        }
+            
+        /* --- Company Header Alignment --- */
+        .company-title-wrap {
+            display: flex;
+            align-items: center; /* Centers the text vertically with the logo */
+            gap: 15px; /* Adds a nice gap between the logo and the text */
+        }
+
+        /* Let's make the company logo slightly larger than the project logos so it stands out */
+        .company-title-wrap .company-logo {
+            height: 32px; 
+            width: auto;
+            flex-shrink: 0; /* Prevents squishing */
+        }
+        
         /* --- Mobile Modifications --- */
         @media (max-width: 768px) {
             nav {
@@ -842,7 +947,7 @@
                 <div class="card">
                     <span class="software-title">Data Visualization Tools</span>
                     <ul class="software-details card-bullets">
-                        <li>Excel</li>
+                        <li>Excel</>li>
                         <li>Databricks</li>
                         <li>Hex</li>
                         <li>MATLAB</li>
@@ -881,65 +986,83 @@
         </section>
 
         <section id="projects">
-            <h2>Rivian Projects</h2>
+            <h2>Experience & Projects</h2>
             
-            <div class="card project">
-                <div class="project-header">
-                    <h3>Battery Interconnect Fatigue Testing</h3>
-                    <button class="expand-btn" aria-label="Toggle details">
-                        <span class="chevron-line left"></span>
-                        <span class="chevron-line right"></span>
-                    </button>
-                </div>
+            <div class="company-group">
+                <button class="company-accordion">
+                    <div class="company-title-wrap">
+                        <img src="Rivian_Logo.png" alt="Rivian" class="company-logo">
+                        <h3>Rivian</h3>
+                    </div>
+                    <i class="fa-solid fa-chevron-down accordion-icon"></i>
+                </button>
                 
-                <p>Spearheaded the fatigue testing regiment used to validate battery module current collector to cell interconnect weld reliability.</p>
-                <div class="more-content">
-                    <ul class="card-bullets">
-                        <li>Designed coupons and test setup, ran both quasi-static and fatigue tests, and compared empirical results against CAE modeled requirements to ensure long-term durability.</li>
-                        <li>Collaborated with product engineers to integrate test findings into design improvements.</li>
-                        <li>Broke down the improvements and significant findings to leadership and documented the results and methodology for future reference.</li>
-                    </ul>
+                <div class="company-content">
+                    
+                    <div class="card project">
+                        <div class="project-header">
+                            <div class="project-title-wrap">
+                                <h3>Battery Interconnect Fatigue Testing</h3>
+                            </div>
+                            <button class="expand-btn" aria-label="Toggle details">
+                                <span class="chevron-line left"></span>
+                                <span class="chevron-line right"></span>
+                            </button>
+                        </div>
+                        <p>Spearheaded the fatigue testing regiment used to validate battery module current collector to cell interconnect weld reliability.</p>
+                        <div class="more-content">
+                            <ul class="card-bullets">
+                                <li>Designed coupons and test setup, ran both quasi-static and fatigue tests, and compared empirical results against CAE modeled requirements to ensure long-term durability.</li>
+                                <li>Collaborated with product engineers to integrate test findings into design improvements.</li>
+                                <li>Broke down the improvements and significant findings to leadership and documented the results and methodology for future reference.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="card project">
+                        <div class="project-header">
+                            <div class="project-title-wrap">
+                                <h3>Weld Clamp Design</h3>
+                            </div>
+                            <button class="expand-btn" aria-label="Toggle details">
+                                <span class="chevron-line left"></span>
+                                <span class="chevron-line right"></span>
+                            </button>
+                        </div>
+                        <p>Designed and commissioned a set of retrofit weld clamps to replicate production machine clamping footprints on a patent-pending weld mask used on the module pilot line.</p>
+                        <div class="more-content">
+                            <ul class="card-bullets">
+                                <li>Used a drafted interior oriface to assist the vision targeting system in placing precise welds.</li>
+                                <li>Collaborated with product engineers to integrate test findings into design improvements.</li>
+                                <li>Broke down the improvements and significant findings to leadership and documented the results and methodology for future reference.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="card project">
+                        <div class="project-header">
+                            <div class="project-title-wrap">
+                                <h3>Module Busbar Heat Stake Rework Testing</h3>
+                            </div>
+                            <button class="expand-btn" aria-label="Toggle details">
+                                <span class="chevron-line left"></span>
+                                <span class="chevron-line right"></span>
+                            </button>
+                        </div>
+                        <p>Conducted comparison trials for the rework adhesive used to adhere busbars to the module frame.</p>
+                        <div class="more-content">
+                            <ul class="card-bullets">
+                                <li>Determined most efficient volume and distribution of adhesive to bond busbars to frames.</li>
+                                <li>Strength tested adhesive rework setups and compared to heat stakes of varying heights and staking pressures.</li>
+                                <li>Created a Job Execution Sheet instructing technicians on how to complete the rework process.</li>
+                            </ul>
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
-            <div class="card project">
-                <div class="project-header">
-                    <h3>Weld Clamp Design</h3>
-                    <button class="expand-btn" aria-label="Toggle details">
-                        <span class="chevron-line left"></span>
-                        <span class="chevron-line right"></span>
-                    </button>
-                </div>
-                <p>Designed and commissioned a set of retrofit weld clamps to replicate production machine clamping footprints on a patent-pending weld mask used on the module pilot line.</p>
-                
-                <div class="more-content">
-                    <ul class="card-bullets">
-                        <li>Used a drafted interior oriface to assist the vision targeting system in placing precise welds.</li>
-                        <li>Collaborated with product engineers to integrate test findings into design improvements.</li>
-                        <li>Broke down the improvements and significant findings to leadership and documented the results and methodology for future reference.</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="card project">
-                <div class="project-header">
-                    <h3>Module Busbar Heat Stake Rework Testing</h3>
-                    <button class="expand-btn" aria-label="Toggle details">
-                        <span class="chevron-line left"></span>
-                        <span class="chevron-line right"></span>
-                    </button>
-                </div>
-                <p>Conducted comparison trials for the rework adhesive used to adhere busbars to the module frame.</p>
-                
-                <div class="more-content">
-                    <ul class="card-bullets">
-                        <li>Determined most efficient volume and distribution of adhesive to bond busbars to frames</li>
-                        <li>Strength tested adhesive rework setups and compared to heat stakes of varying heights and staking pressures.</li>
-                        <li>Created a Job Execution Sheet instructing technicians on how to complete the rework process.</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
+            </section>
 
         <section id="contact">
             <h2>Connect With Me!</h2>
@@ -1176,6 +1299,16 @@
             resizeTimer = setTimeout(() => {
                 document.body.classList.remove('resize-stopper');
             }, 400);
+        });
+
+        // --- Company Dropdown Accordions ---
+        const companyAccordions = document.querySelectorAll('.company-accordion');
+
+        companyAccordions.forEach(button => {
+            button.addEventListener('click', function() {
+                const group = this.closest('.company-group');
+                group.classList.toggle('active');
+            });
         });
     </script>
 
