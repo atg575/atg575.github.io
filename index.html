@@ -165,11 +165,45 @@
             margin-bottom: 1.5rem;
         }
 
+        /* --- Resume Button --- */
+        .header-action {
+            margin-top: 2rem;
+        }
+
+        .primary-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background-color: #F7F1EB;
+            color: #2B3621;
+            padding: 12px 28px;
+            border-radius: 30px; /* Gives it a sleek pill shape */
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        }
+
+        .primary-btn:hover {
+            transform: translateY(-3px); /* Lifts up on hover */
+            box-shadow: 0 8px 15px rgba(0,0,0,0.3);
+        }
+
+        /* On mobile, center the button */
+        @media (max-width: 768px) {
+            .header-action {
+                display: flex;
+                justify-content: center;
+            }
+        }
+
         /* --- Custom Grid Layout --- */
         .card-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 1rem;
+            padding-top: 1.5rem; /* Adds vertical spacing between the section header and the cards */
             align-items: start; /* Keeps closed cards their normal size */
         }
 
@@ -177,7 +211,7 @@
         .card {
             display: block; /* Forces custom tag to behave like a standard block div */
             background: #F7F1EB;
-            min-height: 100px; 
+            min-height: 100px;
             padding: 1rem;
             border-radius: 5px;
             color: #32502c;
@@ -202,12 +236,14 @@
             text-align: center;
             text-align: center;
             font-weight: bold;
-            cursor: pointer; /* Indicates they are clickable */
+            cursor: pointer; 
+            background-color: #e6ddd5;/* Indicates they are clickable */
         }
 
         #skills .card:hover, #software .card:hover {
             transform: translateY(-5px);
             box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+            background-color: #ebe5df;
         }
 
         .skill-title, .software-title {
@@ -246,7 +282,7 @@
         }
 
         #projects .card h3 {
-            color: #074d1d;
+            color: #2B3621;
             margin-bottom: 0; 
         }
 
@@ -309,7 +345,7 @@
         }
 
         .more-content.expanded {
-            max-height: 250px; 
+            max-height: 500px; 
             margin-top: 1rem;
         }
 
@@ -437,11 +473,17 @@
 
         /* Make the LinkedIn icon larger */
         .contact-links .fa-linkedin {
-            font-size: 1.8rem; /* Increased from 1.5rem */
+            font-size: 1.7rem; /* Increased from 1.5rem */
         }
 
         /* --- Copy Button & Tooltip --- */
         .email-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .phone-container {
             display: flex;
             align-items: center;
             gap: 10px;
@@ -461,6 +503,24 @@
         }
 
         #copy-email-btn:hover {
+            color: #2B3621;
+            transform: scale(1.1); /* Slight pop effect on hover */
+        }
+
+        #copy-phone-btn {
+            background: none;
+            border: none;
+            color: #074d1d;
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.3s ease, transform 0.2s ease;
+        }
+
+        #copy-phone-btn:hover {
             color: #2B3621;
             transform: scale(1.1); /* Slight pop effect on hover */
         }
@@ -520,6 +580,11 @@
             filter: brightness(0) invert(1);
         }
 
+        body.dark-mode .primary-btn {
+            background-color: #e0e6d8; /* Softer white */
+            color: #12160e; /* Dark text */
+        }
+
         /* --- Dark Mode Expand Buttons --- */
         body.dark-mode .expand-btn {
             background-color: #3a4d2f; /* A muted, softer dark green that matches the theme */
@@ -536,10 +601,14 @@
         /* --- Dark Mode Card Hover Effects --- */
         body.dark-mode #skills .card:hover, 
         body.dark-mode #software .card:hover {
-            background-color: #354329; /* Slightly lighter than the base #2B3621 to create a highlight */
+            background-color: #1e2717; /* Slightly lighter than the base #2B3621 to create a highlight */
             box-shadow: 0 8px 15px rgba(0, 0, 0, 0.6); /* Much stronger, darker shadow for depth */
         }
-
+        body.dark-mode #skills .card, 
+        body.dark-mode #software .card{
+            background-color: #1d2416;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
         /* Nav & Footer */
         body.dark-mode nav, 
         body.dark-mode footer, 
@@ -690,6 +759,25 @@
             flex-shrink: 0; /* Prevents squishing */
         }
         
+        /* --- Responsive Google Slides Embed --- */
+        .slide-container {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9; /* Modern CSS to force widescreen ratio */
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .slide-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
         /* --- Mobile Modifications --- */
         @media (max-width: 768px) {
             nav {
@@ -852,6 +940,11 @@
             <div class="header-text">
                 <h1 id="typewriter-name"></h1>
                 <p>Design | Analysis | Realization</p>
+                <div class="header-action">
+                    <a href="AVResume.pdf" target="_blank" class="primary-btn">
+                        <i class="fa-solid fa-download"></i> Download Resume
+                    </a>
+                </div>
             </div>
             <img src="portrait.jpg" alt="Alex Vazquez" class="main-profile-pic">
         </div>
@@ -864,145 +957,173 @@
         </section>
 
         <section id="skills">
-            <h2>Skills</h2>
-            <div class="card-grid">
-                <div class="card">
-                    <span class="skill-title">Data Analysis</span>
-                    <div class="skill-details">
-                        <p>Parsed, visualized, and presented insights from complex test data.</p>
+            <div class="company-group" style="margin-bottom: 0;">
+                <button class="company-accordion">
+                    <div class="company-title-wrap">
+                        <h3>Technical Skills</h3>
+                    </div>
+                    <i class="fa-solid fa-chevron-down accordion-icon"></i>
+                </button>
+                <div class="company-content">
+                    <div class="company-content-inner">
+                    <div class="card-grid">
+                        <div class="card">
+                            <span class="skill-title">Data Analysis</span>
+                            <div class="skill-details">
+                                <p>Parsed, visualized, and presented insights from complex test data.</p>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <span class="skill-title">Product Design</span>
+                            <div class="skill-details">
+                                <p>Designed parts and assemblies for ergonomics, structural integrity, and real-world assembly.</p>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <span class="skill-title">Process Development</span>
+                            <div class="skill-details">
+                                <p>Streamlined part manufacturing using automation and continuous improvement methodologies.</p>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <span class="skill-title">Project Management</span>
+                            <div class="skill-details">
+                                <p>Led large cross-functional scope projects from proposal through execution.</p>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <span class="skill-title">Test Development</span>
+                            <div class="skill-details">
+                                <p>Designed physical test setups and defined metrics to validate part or system reliability.</p>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <span class="skill-title">Design for Manufacturing (DFM)</span>
+                            <div class="skill-details">
+                                <p>Optimized part materials and geometries to ensure scalable and cost-effective production.</p>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <span class="skill-title">Process Failure Mode and Effects Analysis (PFMEA)</span>
+                            <div class="skill-details">
+                                <p>Identified and mitigated potential process failures before they impacted production.</p>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <span class="skill-title">Finite Element Analysis (FEA)</span>
+                            <div class="skill-details">
+                                <p>Validated solid mechanics and heat transfer behaviors under various load conditions.</p>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <span class="skill-title">Composite Manufacturing</span>
+                            <div class="skill-details">
+                                <p>Designed and manufactured complex molded parts and structures from composite materials such as carbon fiber and kevlar.</p>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <span class="skill-title">Laser Welding & Cutting</span>
+                            <div class="skill-details">
+                                <p>Welded battery interconnects and cut thin materials with high precision.</p>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <span class="skill-title">Geometric Dimensioning & Tolerancing (GD&T)</span>
+                            <div class="skill-details">
+                                <p>Created part drawings for manufacturing with precise dimensions and tolerances.</p>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <span class="skill-title">Fixturing Design</span>
+                            <div class="skill-details">
+                                <p>Designed and implemented custom fixtures to streamline various part manufacturing processes.</p>
+                            </div>
+                        </div>
+                    </div>
                     </div>
                 </div>
-                <div class="card">
-                    <span class="skill-title">Product Design</span>
-                    <div class="skill-details">
-                        <p>Designed parts and assemblies for ergonomics, structural integrity, and real-world assembly.</p>
-                    </div>
-                </div>
-                <div class="card">
-                    <span class="skill-title">Process Development</span>
-                    <div class="skill-details">
-                        <p>Streamlined part manufacturing using automation and continuous improvement methodologies.</p>
-                    </div>
-                </div>
-                <div class="card">
-                    <span class="skill-title">Project Management</span>
-                    <div class="skill-details">
-                        <p>Led large cross-functional scope projects from proposal through execution.</p>
-                    </div>
-                </div>
-                <div class="card">
-                    <span class="skill-title">Test Development</span>
-                    <div class="skill-details">
-                        <p>Designed physical test setups and defined metrics to validate part or system reliability.</p>
-                    </div>
-                </div>
-                <div class="card">
-                    <span class="skill-title">Design for Manufacturing (DFM)</span>
-                    <div class="skill-details">
-                        <p>Optimized part materials and geometries to ensure scalable and cost-effective production.</p>
-                    </div>
-                </div>
-                <div class="card">
-                    <span class="skill-title">Process Failure Mode and Effects Analysis (PFMEA)</span>
-                    <div class="skill-details">
-                        <p>Identified and mitigated potential process failures before they impacted production.</p>
-                    </div>
-                </div>
-                <div class="card">
-                    <span class="skill-title">Finite Element Analysis (FEA)</span>
-                    <div class="skill-details">
-                        <p>Validated solid mechanics and heat transfer behaviors under various load conditions.</p>
-                    </div>
-                </div>
-                <div class="card">
-                    <span class="skill-title">Composite Manufacturing</span>
-                    <div class="skill-details">
-                        <p>Designed and manufactured complex molded parts and structures from composite materials such as carbon fiber and kevlar.</p>
-                    </div>
-                </div>
-                <div class="card">
-                    <span class="skill-title">Laser Welding & Cutting</span>
-                    <div class="skill-details">
-                        <p>Welded battery interconnects and cut thin materials with high precision.</p>
-                    </div>
-                </div>
-                <div class="card">
-                    <span class="skill-title">Geometric Dimensioning & Tolerancing (GD&T)</span>
-                    <div class="skill-details">
-                        <p>Created part drawings for manufacturing with precise dimensions and tolerances.</p>
-                    </div>
-                </div>
-                <div class="card">
-                    <span class="skill-title">Fixturing Design</span>
-                    <div class="skill-details">
-                        <p>Designed and implemented custom fixtures to streamline various part manufacturing processes.</p>
-                    </div>
-                </div>
-            </div>
         </section>
 
         <section id="software">
-            <h2>Software</h2>
-            <div class="card-grid">
-                <div class="card">
-                    <span class="software-title">Computer Aided Design (CAD)</span>
-                    <ul class="software-details card-bullets">
-                        <li>SolidWorks</li>
-                        <li>Autodesk Fusion</li>
-                        <li>Autodesk AutoCAD</li>
-                        <li>CATIA</li>
-                    </ul>
+            <div class="company-group" style="margin-bottom: 0;">
+                <button class="company-accordion">
+                    <div class="company-title-wrap">
+                        <h3>Software</h3>
+                    </div>
+                    <i class="fa-solid fa-chevron-down accordion-icon"></i>
+                </button>
+                <div class="company-content">
+                    <div class="company-content-inner">
+                        <div class="card-grid">
+                            <div class="card">
+                                <span class="software-title">Computer Aided Design (CAD)</span>
+                                <ul class="software-details card-bullets">
+                                    <li>SolidWorks</li>
+                                    <li>Autodesk Fusion</li>
+                                    <li>Autodesk AutoCAD</li>
+                                    <li>CATIA</li>
+                                </ul>
+                            </div>
+                            <div class="card">
+                                <span class="software-title">Programming Languages</span>
+                                <ul class="software-details card-bullets">
+                                    <li>Python</li>
+                                    <li>MATLAB</li>
+                                    <li>SQL</li>
+                                    <li>CNC G-code</li>
+                                    <li>Arduino</li>
+                                    <li>ROS2</li>
+                                </ul>
+                            </div>
+                            <div class="card">
+                                <span class="software-title">Data Visualization Tools</span>
+                                <ul class="software-details card-bullets">
+                                    <li>Microsoft Excel</li>
+                                    <li>Databricks</li>
+                                    <li>Hex</li>
+                                    <li>MATLAB</li>
+                                </ul>
+                            </div>
+                            <div class="card">
+                                <span class="software-title">Project Management</span>
+                                <ul class="software-details card-bullets">
+                                    <li>JIRA</li>
+                                    <li>Confluence</li>
+                                </ul>
+                            </div>
+                            <div class="card">
+                                <span class="software-title">Finite Element Analysis (FEA)</span>
+                                <ul class="software-details card-bullets">
+                                    <li>SolidWorks</li>
+                                    <li>Ansys</li>
+                                    <li>Abaqus</li>
+                                </ul>
+                            </div>
+                            <div class="card">
+                                <span class="software-title">Computational Fluid Dynamics (CFD)</span>
+                                <ul class="software-details card-bullets">
+                                    <li>SolidWorks</li>
+                                    <li>Star-CCM+</li>
+                                </ul>
+                            </div>
+                            <div class="card">
+                                <span class="software-title">Graphic Design</span>
+                                <ul class="software-details card-bullets">
+                                    <li>Adobe Photoshop</li>
+                                    <li>Adobe Illustrator</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="card">
-                    <span class="software-title">Programming Languages</span>
-                    <ul class="software-details card-bullets">
-                        <li>Python</li>
-                        <li>MATLAB</li>
-                        <li>SQL</li>
-                        <li>CNC G-code</li>
-                        <li>Arduino</li>
-                        <li>ROS2</li>
-                    </ul>
-                </div>
-                <div class="card">
-                    <span class="software-title">Data Visualization Tools</span>
-                    <ul class="software-details card-bullets">
-                        <li>Excel</>li>
-                        <li>Databricks</li>
-                        <li>Hex</li>
-                        <li>MATLAB</li>
-                    </ul>
-                </div>
-                <div class="card">
-                    <span class="software-title">Project Management</span>
-                    <ul class="software-details card-bullets">
-                        <li>JIRA</li>
-                        <li>Confluence</li>
-                    </ul>
-                </div>
-                <div class="card">
-                    <span class="software-title">Finite Element Analysis (FEA)</span>
-                    <ul class="software-details card-bullets">
-                        <li>SolidWorks</li>
-                        <li>Ansys</li>
-                        <li>Abaqus</li>
-                    </ul>
-                </div>
-                <div class="card">
-                    <span class="software-title">Computational Fluid Dynamics (CFD)</span>
-                    <ul class="software-details card-bullets">
-                        <li>SolidWorks</li>
-                        <li>Star-CCM+</li>
-                    </ul>
-                </div>
-                <div class="card">
-                    <span class="software-title">Graphic Design</span>
-                    <ul class="software-details card-bullets">
-                        <li>Adobe Photoshop</li>
-                        <li>Adobe Illustrator</li>
-                    </ul>
-                </div>
-            </div>
+        </section>
+
+        <section id="portfolio-deck">
+            <h2>Portfolio</h2>
+            
+            <div class="slide-container">
+                <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vS7kK4sYisGLxlpeG6QTqLJpbPG7mdtp6YZ4XNI56cPW0UpzZCaEvd64OGNbhaQ9tIHmPiUah2PEDOR/pubembed?start=false&loop=false&delayms=3000" frameborder="0" width="1440" height="839" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>            </div>
+            
         </section>
 
         <section id="projects">
@@ -1053,8 +1174,8 @@
                         <div class="more-content">
                             <ul class="card-bullets">
                                 <li>Used a drafted interior oriface to assist the vision targeting system in placing precise welds.</li>
-                                <li>Collaborated with product engineers to integrate test findings into design improvements.</li>
-                                <li>Broke down the improvements and significant findings to leadership and documented the results and methodology for future reference.</li>
+                                <li>Recalibrated pilot line welding vision and laser parameters to adjust for change in footprint shape prior to validation build production.</li>
+                                <li>Designed to be injection-molded from PEEK material due to strong thermal and rigid properties.</li>
                             </ul>
                         </div>
                     </div>
@@ -1081,6 +1202,79 @@
                     </div>
                 </div>
             </div>
+            <div class="company-group">
+                <button class="company-accordion">
+                    <div class="company-title-wrap">
+                        <img src="gms_black.png" alt="GMS" class="company-logo">
+                        <h3>Gator Motorsports FSAE</h3>
+                    </div>
+                    <i class="fa-solid fa-chevron-down accordion-icon"></i>
+                </button>
+                
+                <div class="company-content">
+                    <div class="company-content-inner">
+                    <div class="card project">
+                        <div class="project-header">
+                            <div class="project-title-wrap">
+                                <h3>Front Wing Design</h3>
+                            </div>
+                            <button class="expand-btn" aria-label="Toggle details">
+                                <span class="chevron-line left"></span>
+                                <span class="chevron-line right"></span>
+                            </button>
+                        </div>
+                        <p>Led the design, simulation, and improvement of the front wing for the F24 (2023-2024 season).</p>
+                        <div class="more-content">
+                            <ul class="card-bullets">
+                                <li>Led a team of engineers in the design and implementation of new front wing elements and features.</li>
+                                <li>Tested a variety of airfoils to determine which features optimized front wing performance needs for each element.</li>
+                                <li>Designed and ran CFD simulations on various configurations to evaluate different airfoil sizes, positions, and attack angles to assess their impact on drag and downforce production.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="card project">
+                        <div class="project-header">
+                            <div class="project-title-wrap">
+                                <h3>Manufacturing and Design Process Improvement</h3>
+                            </div>
+                            <button class="expand-btn" aria-label="Toggle details">
+                                <span class="chevron-line left"></span>
+                                <span class="chevron-line right"></span>
+                            </button>
+                        </div>
+                        <p>Organized manufacturing operations and design progress to improve labor efficiency and design comparison.</p>
+                        <div class="more-content">
+                            <ul class="card-bullets">
+                                <li>Implemented a scheduling system for aerodynamics team members to improve personnel allocation and space utilization.</li>
+                                <li>Fostered strong communication between leadership and aerodynamics team members through displaying updated progress in scheduling sheet.</li>
+                                <li>Created spreadsheets organizing specific data points for each aerodynamic subsystem and tracked improvements over iterations.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="card project">
+                        <div class="project-header">
+                            <div class="project-title-wrap">
+                                <h3>Composite Materials Manufacturing</h3>
+                            </div>
+                            <button class="expand-btn" aria-label="Toggle details">
+                                <span class="chevron-line left"></span>
+                                <span class="chevron-line right"></span>
+                            </button>
+                        </div>
+                        <p>Manufactured 3 aerodynamic packages using composite materials such as carbon fiber and kevlar.</p>
+                        <div class="more-content">
+                            <ul class="card-bullets">
+                                <li>Conducted wet layup and curing processes for each part using vacuum bagging to shape elements and endplates.</li>
+                                <li>Post-processed parts to remove excess material and achieve desired surface finish to reduce weight and drag.</li>
+                                <li>Hotwired and CNC machined foam stock material into 2D and 3D molds.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
 
             </section>
 
@@ -1096,7 +1290,15 @@
                     </button>
                     <span id="copy-tooltip" class="tooltip">Copied!</span>
                 </div>
-
+                <div class="phone-container">
+                    <a href="tel:561-419-5754">
+                        <i class="fa-solid fa-phone"></i> 561-419-5754
+                    </a>
+                    <button id="copy-phone-btn" aria-label="Copy phone number" title="Copy to clipboard">
+                        <i class="fa-regular fa-copy"></i>
+                    </button>
+                    <span id="copy-tooltip" class="tooltip">Copied!</span>
+                </div>
                 <a href="https://www.linkedin.com/in/alex-e-vazquez/" target="_blank">
                     <i class="fa-brands fa-linkedin"></i> linkedin.com/in/alex-e-vazquez
                 </a>
@@ -1226,6 +1428,31 @@
             });
         });
 
+        // Copy to Clipboard Functionality
+        document.getElementById('copy-phone-btn').addEventListener('click', function() {
+            const phoneToCopy = "561-419-5754";
+            
+            // Write the text to the clipboard
+            navigator.clipboard.writeText(phoneToCopy).then(() => {
+                const tooltip = document.getElementById('copy-tooltip');
+                const icon = this.querySelector('i');
+
+                // Show the tooltip and change the icon to a checkmark
+                tooltip.classList.add('show');
+                icon.classList.remove('fa-copy', 'fa-regular');
+                icon.classList.add('fa-check', 'fa-solid'); 
+
+                // Reset everything back to normal after 2 seconds
+                setTimeout(() => {
+                    tooltip.classList.remove('show');
+                    icon.classList.remove('fa-check', 'fa-solid');
+                    icon.classList.add('fa-copy', 'fa-regular');
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy text: ', err);
+            });
+        });
+
         // Dark Mode Toggle Functionality
         const darkModeToggle = document.getElementById('dark-mode-toggle');
         const body = document.body;
@@ -1299,15 +1526,26 @@
             });
         });
 
-        // --- Auto-Close Mobile Menu on Link Click ---
+       // --- Auto-Close Mobile Menu & Auto-Open Accordions ---
         const navMenu = document.querySelector('nav ul');
         const navLinks = document.querySelectorAll('nav ul li a');
 
         navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                // If the mobile menu is open, close it
+            link.addEventListener('click', function(e) {
+                // 1. If the mobile menu is open, close it
                 if (navMenu.classList.contains('show')) {
                     navMenu.classList.remove('show');
+                }
+
+                // 2. Auto-Open the accordion for the clicked section
+                const targetId = this.getAttribute('href');
+                if (targetId && targetId.startsWith('#')) {
+                    const targetSection = document.querySelector(targetId);
+                    if (targetSection) {
+                        // Find any accordion groups inside the destination section and force them open
+                        const accordions = targetSection.querySelectorAll('.company-group');
+                        accordions.forEach(acc => acc.classList.add('active'));
+                    }
                 }
             });
         });
