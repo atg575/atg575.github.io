@@ -696,13 +696,24 @@
                 min-height: 57px; /* Locks the mobile nav bar to the exact same height as the desktop nav */
             }
 
-            nav ul {
-                flex-direction: column;
-                gap: 2rem;
-                padding: 1rem 0;
-                margin-left: 0; /* Centers nav links on mobile */
-                align-items: center;
-            }
+            nav ul { 
+            background-color: #F7F1EB; /* <-- Add this line back! */
+            display: flex; 
+            flex-direction: column; 
+            gap: 0.5rem; 
+            margin-left: 0; 
+            align-items: center; 
+            width: 100%; 
+            position: absolute; 
+            top: 100%; 
+            left: 0; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05); 
+            padding: 0; 
+            max-height: 0; 
+            opacity: 0; 
+            visibility: hidden; 
+            transition: max-height 0.4s ease-in-out, opacity 0.4s ease-in-out, padding 0.4s ease-in-out, visibility 0.4s;
+        }
             
             header p {
                 font-size: 1rem;
@@ -853,7 +864,7 @@
         </section>
 
         <section id="skills">
-            <h2>Technical Skills</h2>
+            <h2>Skills</h2>
             <div class="card-grid">
                 <div class="card">
                     <span class="skill-title">Data Analysis</span>
@@ -1259,6 +1270,12 @@
             } else {
                 enableDarkMode();
                 localStorage.setItem('theme', 'dark'); 
+            }
+            
+            // --- ADD THESE LINES: Auto-close the mobile menu if it's open ---
+            const navMenu = document.querySelector('nav ul');
+            if (navMenu.classList.contains('show')) {
+                navMenu.classList.remove('show');
             }
         });
 
