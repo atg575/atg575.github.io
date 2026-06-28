@@ -16,8 +16,11 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Arvo', serif;
+        }
+
+        html {
             scroll-behavior: smooth;
-            scroll-padding-top: 80px;
+            scroll-padding-top: 120px; /* Increased slightly to perfectly clear your new profile picture */
         }
 
         body {
@@ -729,7 +732,7 @@
         .company-content {
             display: grid;
             grid-template-rows: 0fr; /* Starts completely collapsed */
-            transition: grid-template-rows 0.5s cubic-bezier(0.25, 1, 0.5, 1); /* Buttery smooth iOS-style curve */
+            transition: grid-template-rows 0.4s ease-in-out; /* Symmetrical, buttery smooth curve */
         }
 
         .company-group.active .company-content {
@@ -739,7 +742,7 @@
         .company-content-inner {
             overflow: hidden; /* Hides the content while it is squished */
             padding: 0 1.5rem;
-            transition: padding 0.5s ease;
+            transition: padding 0.4s ease-in-out; /* Must perfectly match the parent timing */
         }
 
         .company-group.active .company-content-inner {
@@ -1380,8 +1383,7 @@
     </footer>
 
     <script>
-        // Rotating Logo
-        // Rotating Logo and Sticky Nav Profile
+        // --- 1. Rotating Logo and Sticky Nav Profile ---
         document.addEventListener("DOMContentLoaded", function() {
             const logo = document.getElementById("spin-logo");
             const nav = document.querySelector("nav");
@@ -1390,12 +1392,11 @@
             window.addEventListener("scroll", function() {
                 let scrollPosition = window.scrollY;
                 
-                // 1. Handle the logo rotation
+                // Handle the logo rotation
                 let rotationAngle = scrollPosition * 0.5; 
                 logo.style.transform = `translateY(-50%) rotate(${rotationAngle}deg)`;
 
-                // 2. Handle the nav profile fade-in
-                // If we scroll past the height of the header, add the 'scrolled' class
+                // Handle the nav profile fade-in
                 if (scrollPosition > header.offsetHeight - 50) {
                     nav.classList.add("scrolled");
                 } else {
@@ -1404,7 +1405,7 @@
             });
         });
 
-        // Typewriter Effect
+        // --- 2. Typewriter Effect ---
         const nameText = "Alex Vazquez";
         const typingSpeed = 180; 
         let i = 0;
@@ -1418,11 +1419,11 @@
         }
         window.onload = typeWriter;
 
-        // Expandable Project Cards (using custom <card> tags)
+        // --- 3. Expandable Project Cards ---
         const expandButtons = document.querySelectorAll('.expand-btn');
         expandButtons.forEach(button => {
             button.addEventListener('click', function(event) {
-                event.stopPropagation(); // Prevents clicks from triggering parent elements
+                event.stopPropagation(); 
                 this.classList.toggle('open');
                 
                 const projectCard = this.closest('.card');
@@ -1431,134 +1432,195 @@
             });
         });
 
-        // Expandable Skill Cards (Only one open at a time)
+        // --- 4. Expandable Skill Cards ---
         const skillCards = document.querySelectorAll('#skills .card');
         skillCards.forEach(card => {
             card.addEventListener('click', function() {
                 const isActive = this.classList.contains('active');
                 
-                // First, close all skill cards
                 skillCards.forEach(c => c.classList.remove('active'));
                 
-                // If the card wasn't already open, open it
-            if (!isActive) {
-                this.classList.add('active');
-                    // Add this brief timeout to allow the CSS height transition to start
-                setTimeout(() => {
-                    this.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                }, 100); 
-            }
-            });
-        });
-
-        // Expandable Software Cards (Only one open at a time)
-        const softwareCards = document.querySelectorAll('#software .card');
-        
-        softwareCards.forEach(card => {
-            card.addEventListener('click', function() {
-                const isActive = this.classList.contains('active');
-                
-                // First, close all software cards
-                softwareCards.forEach(c => c.classList.remove('active'));
-                
-                // If the card wasn't already open, open it
                 if (!isActive) {
                     this.classList.add('active');
                 }
             });
         });
 
+        // --- 5. Expandable Software Cards ---
+        const softwareCards = document.querySelectorAll('#software .card');
+        softwareCards.forEach(card => {
+            card.addEventListener('click', function() {
+                const isActive = this.classList.contains('active');
+                
+                softwareCards.forEach(c => c.classList.remove('active'));
+                
+                if (!isActive) {
+                    this.classList.add('active');
+                }
+            });
+        });
+
+        // --- 6. Flawless Navigation Scrolling & Accordion Logic ---
+        const navLinks = document.querySelectorAll('nav a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                const targetId = this.getAttribute('href');
+                
+                // Only act on internal section links (like #projects)
+                if (targetId.startsWith('#')) {
+                    e.preventDefault(); 
+                    const targetSection = document.querySelector(targetId);
+                    
+                    if (targetSection) {
+                        // 1. Disable CSS transitions to INSTANTLY close old items
+                        document.body.classList.add('resize-stopper');
+                        
+                        // 2. Force all cards and old accordions to close
+                        document.querySelectorAll('.card.active').forEach(c => c.classList.remove('active'));
+                        document.querySelectorAll('.expand-btn.open').forEach(b => b.classList.remove('open'));
+                        document.querySelectorAll('.more-content.expanded').forEach(c => c.classList.remove('expanded'));
+                        document.querySelectorAll('.company-group.active').forEach(g => g.classList.remove('active'));
+                        
+                        // NEW: Check if we are heading to the Contact section
+                        const isContact = targetId === '#contact';
+
+                        // 3. Only add the massive padding if we are NOT going to the Contact section
+                        if (!isContact) {
+                            document.body.style.paddingBottom = '150vh';
+                        }
+                        
+                        // 4. Force the browser to register the new layout instantly
+                        window.getComputedStyle(document.body).height;
+                        
+                        // 5. Turn CSS animations BACK ON!
+                        document.body.classList.remove('resize-stopper');
+                        
+                        // 6. Smoothly close the mobile menu if it's open
+                        const navMenu = document.querySelector('nav ul');
+                        if (navMenu.classList.contains('show')) {
+                            navMenu.classList.remove('show');
+                        }
+                        
+                        // 7. Calculate the perfect midpoint scroll
+                        const navHeight = document.querySelector('nav').offsetHeight;
+                        const prevElement = targetSection.previousElementSibling;
+                        let scrollTargetY;
+
+                        if (isContact) {
+                            // If Contact, just calculate a standard scroll to the top of its section
+                            const targetTop = targetSection.getBoundingClientRect().top + window.scrollY;
+                            scrollTargetY = targetTop - navHeight - 20;
+                        } else if (prevElement) {
+                            // Midpoint logic for everything else
+                            const targetTop = targetSection.getBoundingClientRect().top + window.scrollY;
+                            const prevBottom = prevElement.getBoundingClientRect().bottom + window.scrollY;
+                            const midpoint = prevBottom + ((targetTop - prevBottom) / 2);
+                            scrollTargetY = midpoint - navHeight;
+                        } else {
+                            // Fallback for the first section
+                            const targetTop = targetSection.getBoundingClientRect().top + window.scrollY;
+                            scrollTargetY = targetTop - navHeight - 30; 
+                        }
+
+                        // 8. Execute the smooth scroll
+                        window.scrollTo({
+                            top: scrollTargetY,
+                            behavior: 'smooth'
+                        });
+                        
+                        // 9. Wait 650ms for the browser to FINISH scrolling, THEN smoothly open accordions
+                        setTimeout(() => {
+                            targetSection.querySelectorAll('.company-group').forEach(g => {
+                                g.classList.add('active');
+                            });
+
+                            // 10. Only remove the padding if we actually added it
+                            if (!isContact) {
+                                setTimeout(() => {
+                                    document.body.style.paddingBottom = '';
+                                }, 500); 
+                            }
+
+                        }, 650); 
+                    }
+                }
+            });
+        });
+
+        // --- 7. Hamburger Menu ---
         document.getElementById('hamburger-menu').addEventListener('click', function() {
             document.querySelector('nav ul').classList.toggle('show');
         });
 
-        // Copy to Clipboard Functionality
+        // --- 8. Copy to Clipboard Functionality (Email) ---
         document.getElementById('copy-email-btn').addEventListener('click', function() {
             const emailToCopy = "alexevazquez@gmail.com";
             
-            // Write the text to the clipboard
             navigator.clipboard.writeText(emailToCopy).then(() => {
-                const tooltip = document.getElementById('copy-tooltip');
+                const tooltip = this.nextElementSibling;
                 const icon = this.querySelector('i');
 
-                // Show the tooltip and change the icon to a checkmark
                 tooltip.classList.add('show');
                 icon.classList.remove('fa-copy', 'fa-regular');
                 icon.classList.add('fa-check', 'fa-solid'); 
 
-                // Reset everything back to normal after 2 seconds
                 setTimeout(() => {
                     tooltip.classList.remove('show');
                     icon.classList.remove('fa-check', 'fa-solid');
                     icon.classList.add('fa-copy', 'fa-regular');
                 }, 2000);
-            }).catch(err => {
-                console.error('Failed to copy text: ', err);
-            });
+            }).catch(err => console.error('Failed to copy text: ', err));
         });
 
-        // Copy to Clipboard Functionality
+        // --- 9. Copy to Clipboard Functionality (Phone) ---
         document.getElementById('copy-phone-btn').addEventListener('click', function() {
             const phoneToCopy = "561-419-5754";
             
-            // Write the text to the clipboard
             navigator.clipboard.writeText(phoneToCopy).then(() => {
-                const tooltip = document.getElementById('copy-tooltip');
+                const tooltip = this.nextElementSibling;
                 const icon = this.querySelector('i');
 
-                // Show the tooltip and change the icon to a checkmark
                 tooltip.classList.add('show');
                 icon.classList.remove('fa-copy', 'fa-regular');
                 icon.classList.add('fa-check', 'fa-solid'); 
 
-                // Reset everything back to normal after 2 seconds
                 setTimeout(() => {
                     tooltip.classList.remove('show');
                     icon.classList.remove('fa-check', 'fa-solid');
                     icon.classList.add('fa-copy', 'fa-regular');
                 }, 2000);
-            }).catch(err => {
-                console.error('Failed to copy text: ', err);
-            });
+            }).catch(err => console.error('Failed to copy text: ', err));
         });
 
-        // Dark Mode Toggle Functionality
+        // --- 10. Dark Mode Toggle Functionality ---
         const darkModeToggle = document.getElementById('dark-mode-toggle');
         const body = document.body;
         const themeIcon = darkModeToggle.querySelector('i');
-
-        // Grab the favicon element
         const favicon = document.getElementById('favicon');
 
         function enableDarkMode() {
             body.classList.add('dark-mode');
             themeIcon.classList.replace('fa-moon', 'fa-sun');
-            // The ?v=dark forces the browser to bypass its cache
             if (favicon) favicon.href = "logo2-white.png?v=dark"; 
         }
 
         function disableDarkMode() {
             body.classList.remove('dark-mode');
             themeIcon.classList.replace('fa-sun', 'fa-moon');
-            // The ?v=light forces the browser to bypass its cache
             if (favicon) favicon.href = "logo2.png?v=light"; 
         }
 
-        // 1. Check local storage AND system preferences
         const currentTheme = localStorage.getItem('theme');
         const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)');
 
-        // Apply the correct theme on load
         if (currentTheme === 'dark') {
             enableDarkMode();
         } else if (currentTheme === 'light') {
             disableDarkMode();
         } else if (systemPrefersDark.matches) {
-            // If no explicit choice is saved, fall back to the device's system preference
             enableDarkMode();
         }
 
-        // 2. Listen for clicks on the toggle button (Manual Override)
         darkModeToggle.addEventListener('click', function() {
             if (body.classList.contains('dark-mode')) {
                 disableDarkMode();
@@ -1568,16 +1630,13 @@
                 localStorage.setItem('theme', 'dark'); 
             }
             
-            // --- ADD THESE LINES: Auto-close the mobile menu if it's open ---
             const navMenu = document.querySelector('nav ul');
             if (navMenu.classList.contains('show')) {
                 navMenu.classList.remove('show');
             }
         });
 
-        // 3. Listen for changes to system settings in real-time
         systemPrefersDark.addEventListener('change', (e) => {
-            // Only auto-switch if the user hasn't explicitly saved a preference yet
             if (!localStorage.getItem('theme')) {
                 if (e.matches) {
                     enableDarkMode();
@@ -1587,7 +1646,7 @@
             }
         });
 
-        // --- Scroll to Top on Logo Click ---
+        // --- 11. Scroll to Top on Logo Click ---
         document.getElementById('spin-logo').addEventListener('click', function() {
             window.scrollTo({
                 top: 0,
@@ -1595,53 +1654,18 @@
             });
         });
 
-       // --- Auto-Close Mobile Menu & Auto-Open Accordions ---
-        const navMenu = document.querySelector('nav ul');
-        const navLinks = document.querySelectorAll('nav ul li a');
-
-        navLinks.forEach(link => {
-            link.addEventListener('click', function(e) {
-                // 1. If the mobile menu is open, close it
-                if (navMenu.classList.contains('show')) {
-                    navMenu.classList.remove('show');
-                }
-
-                // 2. Auto-Open the accordion for the clicked section AND close others
-                const targetId = this.getAttribute('href');
-                if (targetId && targetId.startsWith('#')) {
-                    const targetSection = document.querySelector(targetId);
-                    if (targetSection) {
-                        
-                        // --- NEW: Close ALL section accordions on the page first ---
-                        const allAccordions = document.querySelectorAll('.company-group');
-                        allAccordions.forEach(acc => acc.classList.remove('active'));
-
-                        // --- Open ONLY the accordion inside the section we just clicked ---
-                        const targetAccordions = targetSection.querySelectorAll('.company-group');
-                        targetAccordions.forEach(acc => acc.classList.add('active'));
-                    }
-                }
-            });
-        });
-
-        // --- Prevent Transition Flash on Window Resize ---
+        // --- 12. Prevent Transition Flash on Window Resize ---
         let resizeTimer;
         window.addEventListener('resize', () => {
-            // Add the class to stop transitions
             document.body.classList.add('resize-stopper');
-            
-            // Clear the timer if they are still actively resizing
             clearTimeout(resizeTimer);
-            
-            // Remove the class 400ms after they stop resizing
             resizeTimer = setTimeout(() => {
                 document.body.classList.remove('resize-stopper');
             }, 400);
         });
 
-        // --- Company Dropdown Accordions ---
+        // --- 13. Company Dropdown Accordions ---
         const companyAccordions = document.querySelectorAll('.company-accordion');
-
         companyAccordions.forEach(button => {
             button.addEventListener('click', function() {
                 const group = this.closest('.company-group');
@@ -1649,6 +1673,7 @@
             });
         });
     </script>
+
 
 </body>
 </html>
